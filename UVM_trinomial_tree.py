@@ -15,10 +15,12 @@ from scipy.optimize import minimize
 
     with 0.5 * ( sMin / sMax )^2 <= p < 0.5
 
-    The upper bound on p ensures that pM < 1. The lower bound?
+    See the latex file to understand how the probability have been computed.
 
-    The boundary on the volatility must have been translated on the parameter p.
-
+    Basically, the elementary parameter are vol_min and vol_max, but by construction, the probability measure is parameterized by p. 
+    the goal is to find p_max = f(vol_min, vol_max)
+                        p_min = g(vol_min, vol_max)
+    First we find the boundary of p then, we rewrite the vol in terms of p and we invert the function. 
 '''
 
 def get_blackscholes_call_price(S0, K, r, T, vol):
