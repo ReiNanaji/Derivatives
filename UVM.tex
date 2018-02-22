@@ -1,0 +1,464 @@
+% Preview source code
+
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,lmargin=2cm,rmargin=2cm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{babel}
+\begin{document}
+
+\title{Notes on Uncertain Volatility Model}
+
+\maketitle
+
+\section{Model Specification}
+
+
+\subsection{Volatility Modeling}
+
+NO assumption is made on the volatility distribution. The only prior
+knowledge that is injected is the volatility band to which the realized
+volatility is going to belong to. This can be determined with historical
+data or implied volatility data. 
+
+The model is given by:
+
+\begin{equation}
+\frac{\mathrm{d}S_{t}}{S_{t}}=\sigma_{t}\mathrm{d}Z_{t}
+\end{equation}
+
+
+where $\sigma_{t}\in\left[\sigma_{min},\sigma_{max}\right]\forall t\in\left[0,T\right]$.
+
+
+\subsection{Pricing under the UVM}
+
+Since we are considering ALL the volatility processes whose support
+is in the volatility band, MANY martingale measures exists. A unique
+price makes no sense in the UVM. Instead we can define the seller
+and the buyer price which respectively corresponds to super-replication
+and the sub-replication price. In general, 
+
+
+\paragraph{Buyer's price}
+
+Highest price that someone agrees to pay such that there exists a
+dynamic hedging strategy ensuring that the hedged portfolio is positive
+almost sure. This also corresponds to:
+
+\begin{equation}
+\mathcal{B}_{t}\left(S_{T}\right)=\inf_{\mathbb{P}\in ELMM}\mathbb{E}^{\mathbb{P}}\left[D_{tT}F\left(S_{T}\right)\right]\label{eq:2}
+\end{equation}
+
+
+where ``ELMM'' stands for equivalent local martingale measure. $D_{tT}$
+is the discount factor from $T$ to $t$. $F$ is a payoff function
+(vanilla in this case, for simplification).
+
+
+\paragraph{Seller's price}
+
+Lowest price at which someone agrees to sell such that there exists
+a dynamic hedging strategy ensuring that the hedged portfolio is positive
+almost sure. This also corresponds to:
+
+\begin{equation}
+\mathcal{S}_{t}\left(S_{T}\right)=\sup_{\mathbb{P}\in ELMM}\mathbb{E}^{\mathbb{P}}\left[D_{tT}F\left(S_{T}\right)\right]\label{eq:3}
+\end{equation}
+
+
+In the UVM context, for each measure $\mathbb{P}$, is associated
+a volatility scenario and Equation \ref{eq:2} and \ref{eq:3} rewrites:
+
+\begin{eqnarray}
+u_{t}=\mathcal{B}_{t}\left(S_{T}\right) & = & \inf_{\sigma_{t}\in\mathcal{A}_{tT}}\mathbb{E}^{\mathbb{P}_{\sigma_{t}}}\left[D_{tT}F\left(S_{T}\right)\right]\\
+v_{t}=\mathcal{S}_{t}\left(S_{T}\right) & = & \sup_{\sigma_{t}\in\mathcal{A}_{tT}}\mathbb{E}^{\mathbb{P}_{\sigma_{t}}}\left[D_{tT}F\left(S_{T}\right)\right]
+\end{eqnarray}
+
+
+where $\mathcal{A}_{tT}$ corresponds to the set of adapted volatility
+process whose support is in the volatility band. In essence, the price
+computed under the UVM corresponds to the worst case and the best
+case scenario volatility and determine the band of no-arbitrage price. 
+
+
+\subsection{Stochastic Control Problem: Black-Scholes Barenblatt equation}
+
+Following from the Stochastic Control framework, we can link the seller's
+and the buyer's price to non-linear PDE called HJB PDE. 
+
+\begin{eqnarray*}
+\partial_{t}u\left(t,x\right)+\frac{1}{2}\sup_{\sigma\in\left[\sigma_{min},\sigma_{max}\right]}\sigma^{2}x^{2}\partial_{x}^{2}u\left(t,x\right) & = & 0\\
+u\left(T,x\right) & = & F\left(x\right)
+\end{eqnarray*}
+
+
+and
+
+\begin{eqnarray*}
+\partial_{t}v\left(t,x\right)+\frac{1}{2}\inf_{\sigma\in\left[\sigma_{min},\sigma_{max}\right]}\sigma^{2}x^{2}\partial_{x}^{2}v\left(t,x\right) & = & 0\\
+v\left(T,x\right) & = & F\left(x\right)
+\end{eqnarray*}
+
+
+Or equivalently, 
+
+\begin{eqnarray*}
+\partial_{t}u\left(t,x\right)+\frac{1}{2}\Sigma^{2}\left(\partial_{x}^{2}u\left(t,x\right)\right)x^{2}\partial_{x}^{2}u\left(t,x\right) & = & 0\\
+u\left(T,x\right) & = & F\left(x\right)
+\end{eqnarray*}
+
+
+and
+
+\begin{eqnarray*}
+\partial_{t}v\left(t,x\right)+\frac{1}{2}\Lambda^{2}\left(\partial_{x}^{2}u\left(t,x\right)\right)x^{2}\partial_{x}^{2}v\left(t,x\right) & = & 0\\
+v\left(T,x\right) & = & F\left(x\right)
+\end{eqnarray*}
+
+
+where
+
+\[
+\Sigma\left(X\right)=\begin{cases}
+\sigma_{max} & X\geq0\\
+\sigma_{min} & X<0
+\end{cases}
+\]
+
+
+\[
+\Lambda\left(X\right)=\begin{cases}
+\sigma_{min} & X\geq0\\
+\sigma_{max} & X<0
+\end{cases}
+\]
+
+
+
+\section{Calibration Complex: Lagrangian Uncertain Volatility Model}
+
+For parametric models (Black-Scholes, SV, LV...), the common (does
+not mean good) practice is to calibrate the model parameters to the
+market smile. The initial ``motivation'' behind this practice is
+related to the foundation of relative pricing and static replication.
+The parameters are chosen such that the model mathes the price of
+the vanilla instruments that statically replicate the exotic options.
+Therefore, the exotic price are computed in the model using the information
+contained in the vanilla price. This practice is missleading as the
+implied dynamics may not capture the risk factors driving the exotic
+price. A second point is that the information used for the calibration
+may not ALL be relevant for the hedging of the exotic options. It
+is equivalent to compute the projection of the price on a space that
+is a bad approximation of the real price. However, the model won't
+give ANY signal to the user concerning that matters. \\
+
+
+One of the most stricking example may be the Local Volatility model
+which is the unique one-factor model that perfectly matches the market
+smile. Once the calibration is done, the user have no control whatsoever
+on the dynamics of the smile. Hence, path-dependent product may be
+mispriced in that model with no remediation. \\
+
+
+In the UVM, the only two parameters are the boundary of the volatility
+band. They are set using historical or implied data. The model is
+not meant to match any volatility smile information. In \cite{key-1},
+a model is constructed in order to incorporate market information
+in a consistent and relevant way. The value of an exotic in that model
+can be decomposed in two parts: the one corresponding to the projection
+on the vanilla instruments and a second part corresponding to the
+residue that is replicated dynamically under the UVM worst (or best
+case scenario). The formal price is given by:
+
+\begin{equation}
+V\left(S_{T},t\right)=\inf_{\lambda_{1},\dots,\lambda_{m}}\left\{ \sup_{\sigma_{t}\in\mathcal{A}_{tT}}\mathbb{E}^{\mathbb{P}_{\sigma_{t}}}\left[F\left(S_{T}\right)-\sum_{i=1}^{M}\lambda_{i}e^{-r\left(t_{i}-t\right)}G_{i}\left(S_{t_{i}}\right)\right]+\sum_{i=1}^{M}\lambda_{i}C_{i}\right\} \label{eq:6}
+\end{equation}
+
+
+where $\lambda_{i}$ is the position in the $i^{th}$ vanilla instruments
+with market price $C_{i}$ and payoff $G_{i}$ maturing at time $t_{i}$.
+
+In essence, the algorithm will select the portfolio of vanilla instruments
+that yields the ``best'' replication of the exotic options. This
+is done by choosing the position $\lambda_{i}$ that minimizes the
+contribution of the ``residual liability'' computed under the UVM
+framework. Hence, solving this optimization problem will provide the
+best vanilla portfolio and a residue that is valued under the worst
+(best) scenario volatility. 
+
+The model directly use the information from the hedging instrument
+instead of using then the adjust the parameters. Moreover, we see
+this extension as a form of ``calibration'' as Equation \ref{eq:6}
+is equivalent to: find $\lambda_{1},\dots,\lambda_{M}$ such that:
+
+\begin{eqnarray}
+C_{i} & = & \mathbb{E}^{\tilde{\mathbb{P}}}\left[e^{-r\left(t_{i}-t\right)}G_{i}\left(S_{t_{i}}\right)\right]\\
+\tilde{\mathbb{P}} & = & \arg\sup_{\sigma_{t}\in\mathcal{A}_{tT}}\mathbb{E}^{\mathbb{P}_{\sigma_{t}}}\left[F\left(S_{T}\right)-\sum_{i=1}^{M}\lambda_{i}e^{-r\left(t_{i}-t\right)}G_{i}\left(S_{t_{i}}\right)\right]
+\end{eqnarray}
+
+
+This can be interpreted as: the algorithm try to find the position
+$\lambda_{i}$ such that the measure associated with the worst case
+scenario also match the market price. 
+
+
+\paragraph{Note 1}
+
+We can check the algorithm by pricing a call or a digital option. 
+
+
+\paragraph{Note 2}
+
+The optimization problem will always a unique solution if it exists.
+In fact, the supremum of linear function is convex.
+
+
+\section{Numerical Implementation}
+
+
+\subsection{Tree-based approach}
+
+Remember that the UVM is not complete as the distribution of the volatility
+is not specified and there is not a unique martingale measure but
+a family of measure verying the condition on the volatility. Therefore,
+binomial tree are not a suitable numerical approach. However, trinomial
+trees may be a good candidate as it is an incomplete model. In fact,
+given the no-arbitrage constraints, the risk-neutral probability is
+not uniquely determined. We note that due to the non-uniqueness of
+the risk-neutral measure, the volatility of the underlying is not
+fixed. 
+
+
+\paragraph*{Problem}
+
+Find $P_{U}$, $P_{M}$ and $P_{D}$ and the ``good'' state parametrization
+$U$, $M$ and $D$ such that 
+\begin{enumerate}
+\item $\ln\frac{S_{\delta t}}{S_{0}}$ is asymptotically normally distributed
+with instantaneous mean $\mu$ and instantaneous variance $\sigma^{2}$. 
+\item The maximum and the minimum volatility $\sigma$ achieved can be controlled
+by the probability measure
+\item The no-arbitrage constraint is satisfied
+\begin{equation}
+P_{D}D+P_{M}M+P_{D}D=e^{r\delta t}\label{eq:9}
+\end{equation}
+
+\item The branches recombine.
+\end{enumerate}
+
+\paragraph*{Parametrization of the jump}
+
+In \cite{key-2}, 
+
+\begin{eqnarray}
+U & = & e^{\mu\delta t+u\sqrt{\delta t}}\\
+M & = & e^{\mu\delta t+m\sqrt{\delta t}}\\
+D & = & e^{\mu\delta t+d\sqrt{\delta t}}
+\end{eqnarray}
+
+
+And the coefficient $m$, $u$ and $d$ have to be specified. 
+
+
+\paragraph*{Recombination condition}
+
+This implies:
+
+\[
+UD=M^{2}
+\]
+
+
+Or equivalently, 
+
+\[
+m=\frac{u+d}{2}
+\]
+
+
+
+\paragraph{Asymptotic distribution }
+
+Let us denote $P_{U}^{0}$, $P_{D}^{0}$ and $P_{M}^{0}$ the asymptotic
+probability. We must have:
+
+\begin{eqnarray}
+\mathbb{E}\left[\ln\frac{S_{T}}{S_{0}}\right] & = & \mu\delta t\label{eq:13}\\
+\mathbb{V}ar\left[\ln\frac{S_{T}}{S_{0}}\right] & = & \sigma^{2}\delta t\label{eq:14}
+\end{eqnarray}
+
+
+This gives:
+
+\begin{eqnarray}
+P_{D}^{0}d+P_{M}^{0}\left(\frac{u+d}{2}\right)+P_{U}^{0}u & = & 0\\
+P_{D}^{0}d^{2}+P_{M}^{0}\left(\frac{u+d}{2}\right)^{2}+P_{U}^{0}u^{2} & = & \sigma^{2}
+\end{eqnarray}
+
+
+Equation \ref{eq:13} is a constraint where Equation \ref{eq:14}
+can be seen as a computation of the variance delivered by the resulting
+distribution. It is NOT a constraint !
+
+Combining the constraint \ref{eq:13} with:
+
+\[
+P_{D}^{0}+P_{M}^{0}+P_{U}^{0}=1
+\]
+
+
+We have 3 unknows and 2 constraints. This leaves us with a degree
+of freedom and we set $P_{D}^{0}=p$.
+
+\begin{eqnarray*}
+P_{U}^{0} & = & p-\frac{u+d}{u-d}\\
+P_{M}^{0} & = & -2p+\frac{2u}{u-d}
+\end{eqnarray*}
+
+
+Since probabilities are bounded between 0 and 1, the widest interal
+where $p$ can take values is given by:
+
+\begin{equation}
+\max\left\{ 0,\frac{u+d}{u-d}\right\} \leq p\leq\frac{u}{u-d}\label{eq:17}
+\end{equation}
+
+
+Note that the delivered volatility given by Equation \ref{eq:14}
+is comprised between
+
+\begin{eqnarray*}
+\sigma_{max}^{2} & = & \frac{1}{2}p_{max}\left[\left(u-d\right)^{2}-u\left(u+d\right)\right]\\
+\sigma_{min}^{2} & = & \frac{1}{2}p_{min}\left[\left(u-d\right)^{2}-u\left(u+d\right)\right]
+\end{eqnarray*}
+
+
+This highest and lowest volatility are defined by:
+
+\begin{eqnarray}
+\sigma_{max}^{2} & = & -du\\
+\sigma_{min}^{2} & = & -mu\mathbf{1}_{m\leq0}-md\mathbf{1}_{m>0}
+\end{eqnarray}
+
+
+
+\paragraph{Martingale measure}
+
+Equation \ref{eq:9} now writes with $\mu=r$
+
+\begin{equation}
+e^{r\delta t}=e^{r\delta t+u\sqrt{\delta t}}P_{U}+e^{r\delta t+\left(\frac{u+d}{2}\right)\sqrt{\delta t}}P_{M}+e^{r\delta t+d\sqrt{\delta t}}P_{D}\label{eq:20}
+\end{equation}
+
+
+Given the previous asymptotic distribution derived, we can parametrized
+the distribution as follow
+
+\begin{eqnarray*}
+P_{U} & = & P_{U}^{0}+\pi_{u}\sqrt{\delta t}+o\left(\delta t\right)\\
+P_{M} & = & P_{M}^{0}+\pi_{m}\sqrt{\delta t}+o\left(\delta t\right)\\
+P_{D} & = & P_{D}^{0}+\pi_{d}\sqrt{\delta t}+o\left(\delta t\right)
+\end{eqnarray*}
+
+
+An asymptotic development of Equation \ref{eq:20} combined with a
+unicity argument gives:
+
+\begin{eqnarray*}
+\pi_{u}+\pi_{m}+\pi_{d} & = & 0\\
+\frac{1}{2}\left(P_{D}^{0}d^{2}+P_{M}^{0}\left(\frac{u+d}{2}\right)^{2}+P_{U}^{0}u^{2}\right)+u\pi_{u}+\left(\frac{u+d}{2}\right)\pi_{m}+d\pi_{d} & = & 0
+\end{eqnarray*}
+
+
+Here again the problem is overparametrized. However, we are already
+using $p$ to control our probability measure, we can arbitrarily
+set $\pi_{m}=0$. This gives to 
+
+\begin{eqnarray*}
+\pi_{u} & = & \frac{1}{2\left(d-u\right)}\left(P_{D}^{0}d^{2}+P_{M}^{0}\left(\frac{u+d}{2}\right)^{2}+P_{U}^{0}u^{2}\right)\\
+\pi_{d} & = & -\frac{1}{2\left(d-u\right)}\left(P_{D}^{0}d^{2}+P_{M}^{0}\left(\frac{u+d}{2}\right)^{2}+P_{U}^{0}u^{2}\right)
+\end{eqnarray*}
+
+
+
+\paragraph{Attainable volatility and Choice of the price state}
+
+Finally, the trinomial is entirely determined by the parameter $p$
+and the parameters $u$ and $d$. In \cite{key-2}, the choice is
+$u=-d=\sigma_{max}$. This gives $m=0$. On top of that, given that
+the volatility band is chosen, the corresponding $p$ band is:
+
+\[
+\frac{1}{2}\left(\frac{\sigma_{min}}{\sigma_{max}}\right)^{2}\leq p\leq\frac{1}{2}
+\]
+
+
+Hence, the probability are defined as:
+
+\begin{eqnarray*}
+P_{U} & = & p\left(1-\frac{1}{2}\sigma_{max}\sqrt{\delta t}\right)+o\left(\delta t\right)\\
+P_{M} & = & 1-2p+o\left(\delta t\right)\\
+P_{D} & = & p\left(1+\frac{1}{2}\sigma_{max}\sqrt{\delta t}\right)+o\left(\delta t\right)
+\end{eqnarray*}
+
+
+
+\paragraph{Backward computation of the option value}
+
+In the UVM context, the value of $p$ is monitored by the discrete
+version of the gamma. 
+
+
+\subsection{PDE }
+
+
+\subsection{Monte-Carlo Method}
+
+
+\section{Tests}
+
+
+\subsection{Cliquet}
+
+See \cite{key-4}. Cliquet option are exotic option which are basically
+a series of forward starting call spread options. Cliquet options
+are driven by the level of the forward skew. Constant model and deterministic
+volatility are not suited as they do not provide a control on the
+smile dynamics. In \cite{key-4}, two different approaches are tested
+to value cliquet options.
+\begin{itemize}
+\item Consider that the volatility is constant but unknown with the level
+between two boundary values
+\item Consider that the volatility is unknown between two boundary values
+but not necessarily constant. 
+\end{itemize}
+In the first situation, vega is a metric to mesure the model-delivered
+price sensitivity with the constant volatility. In the second case,
+the uncertainty on the price resulting from the uncertainty on the
+volatility corresponds to the no-arbitrage band. What we see is that
+the cliquet price is weakly sensitive to the constant volatility while
+the price band in the UVM is much larger...
+\begin{thebibliography}{1}
+\bibitem{key-1}Managing The Volatility Risk of Portfolios of derivative
+securities: the Lagrangian Uncertain Volatility model, Marco Avelleneda
+and Antonio Paras
+
+\bibitem{key-2}A new approach for pricing derivative securities in
+markets with uncertain volatilities: A `` case study'' on the trinomial
+tree, Arnon Levy, Avellanada and Antonio Paras
+
+\bibitem{key-3}The Uncertain Volatility Model, Claude Martini, Antoine
+Jacquier
+
+\bibitem{key-4}Cliquet Options and Volatility Models, Paul Wilmott
+
+\bibitem{key-5}Uncertain Volatility Model: A Monte-Carlo Approach,
+Julien Guyon, Pierre Henry-Labordere\end{thebibliography}
+
+\end{document}
