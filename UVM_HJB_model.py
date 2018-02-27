@@ -1,6 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Feb 26 12:25:44 2018
+
+@author: f619871
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def get_regular_grid(Tstart, Tend, Tstep, Xstart, Xend, Xstep, Ystart, Yend, Ystep):
     
@@ -25,6 +31,7 @@ def get_regular_grid(Tstart, Tend, Tstep, Xstart, Xend, Xstep, Ystart, Yend, Yst
     
 def zero_curve(t):
     return 0.01*np.sqrt(t) - 0.001*t + 0.05
+    #return np.zeros(t.shape)
     
 def volatility_matrix(X, smin, smax, upper=True):
     if upper:
@@ -76,43 +83,61 @@ def UVMHJB_pde_pricer(smin, smax, beta, zero_curve, payoff, grid, upper=True):
 
 def bond(X, Y):
     return np.ones(X.shape)
-    
-def bond_price(grid, zero_curve):
-    B0T = np.exp(-grid['T']['incr']*np.cumsum(zero_curve(grid['T']['matrix'][0,0,:-1])))
-    return B0T[-1] / B0T
- 
 
-Tstart, Tend, Tstep = 0, 1, 252
-Xstart, Xend, Xstep = 0, 1, 202
-Ystart, Yend, Ystep = 0, 1, 202
+def bond_price(beta, grid, zero_curve):
+    dt = grid['T']['incr']
+    F = zero_curve(grid['T']['matrix'][0,0,:])
+    
+    B0T = np.exp(-dt * np.cumsum(F))
+    B0T[1:] = B0T[:-1]
+    B0T[0] = 1
+    
+    BtT = B0T[-1] / B0T    
+    
+    k = np.exp(- beta * grid['T']['matrix'][0,0,:][::-1])
+    g = (1 - k) / beta
+    
+    Y = grid['Y']['matrix'][:,:,0]
+    X = grid['X']['matrix'][:,:,0]
+    
+    bond = BtT[np.newaxis, np.newaxis, :] * np.exp(-(0.5*(k**2)[np.newaxis, np.newaxis,:]*Y[:,:,np.newaxis] + g[np.newaxis, np.newaxis,:]*X[:,:,np.newaxis]))   
+    return bond
+
+
+Tstart, Tend, Tstep = 0, 1, 101
+Xstart, Xend, Xstep = -0.25, 0.25, 11
+Ystart, Yend, Ystep = 0, 0.005, 11
 
 smin, smax = 0.05, 0.05
 beta = 0.05
-    
-grid = get_regular_grid(Tstart, Tend, Tstep, Xstart, Xend, Xstep, Ystart, Yend, Ystep)
 
+grid = get_regular_grid(Tstart, Tend, Tstep, Xstart, Xend, Xstep, Ystart, Yend, Ystep)
+    
 res = UVMHJB_pde_pricer(smin, smax, beta, zero_curve, bond, grid, upper=True)
 
-plt.figure()
-plt.plot(grid['T']['matrix'][0,0,:], res['price'][100,10,:])
-plt.grid()
-plt.show()
+close = bond_price(beta, grid, zero_curve)
+
+
+
 '''
 Comparing the bond price from the zero curve using close form formula or the PDE solver
 '''
-pde = res['price'][0,0,:]
-close = bond_price(grid, zero_curve)
+
+i = 1
+j = 1
+
+#plt.figure()
+#plt.plot(grid['T']['matrix'][0,0,:], res['price'][i,j,:] - close[i,j,:])
+#plt.grid()
+#plt.legend(loc=0)
+#plt.show()
+
 
 plt.figure()
-plt.scatter(close,pde[1:])
-plt.plot(np.linspace(0.94,1,100), np.linspace(0.94,1,100))
+plt.plot(grid['T']['matrix'][0,0,:], res['price'][i,j,:], label='PDE')
+plt.plot(grid['T']['matrix'][0,0,:], close[i,j,:], label='Exact')
 plt.grid()
+plt.legend(loc=0)
 plt.show()
 
-'''
-Simple plot 
-'''
-plt.figure()
-plt.plot(grid['T']['matrix'][0,0,:], res['price'][100,10,:])
-plt.grid()
-plt.show()
+
