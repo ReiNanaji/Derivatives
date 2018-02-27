@@ -64,7 +64,7 @@ def UVMHJB_pde_pricer(smin, smax, beta, zero_curve, payoff, grid, upper=True):
         V = volatility_matrix(M, smin, smax, upper)
         U[:,:,t] = U[:,:,t+1] - 2 * beta * dt / dy * Y[:,:,t+1] * (np.dot(U[:,:,t+1], B) - U[:,:,t+1]) + \
         dt / dx * (Y[:,:,t+1] - beta * X[:,:,t+1]) * (np.dot(A, U[:,:,t+1]) - U[:,:,t+1]) + \
-        0.5 * V * M - (F[:,:,t+1] - X[:,:,t+1]) * U[:,:,t+1]
+        0.5 * V * V * M - (F[:,:,t+1] - X[:,:,t+1]) * U[:,:,t+1]
     
     return {'grid':grid, 'zero':F, 'price':U}
 
