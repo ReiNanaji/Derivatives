@@ -1,0 +1,218 @@
+% Preview source code
+
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,lmargin=2cm}
+\usepackage{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfauthor={Vathana.S.Leang}}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+\makeatother
+
+\begin{document}
+
+\title{Uncertain Volatility in the HJM Framework}
+
+\maketitle
+
+\section{The HJM Framework}
+
+In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
+the instantaneous forward rate is defined as 
+\[
+f\left(t,T\right)=f\left(0,T\right)+k\left(t,T\right)\Phi\left(t\right)\gamma\left(t,T\right)+k\left(t,T\right)\Gamma\left(t\right)
+\]
+
+
+with
+
+\[
+\begin{cases}
+k\left(t,T\right) & =\exp\left(-\beta\left(T-t\right)\right)\\
+\gamma\left(t,T\right) & =\frac{1-\exp\left(-\beta\left(T-t\right)\right)}{\beta}
+\end{cases}
+\]
+
+
+and 
+\[
+\begin{cases}
+\mathrm{d}\Gamma_{t} & =\sigma_{t}\mathrm{d}W_{t}^{\mathbb{Q}}+\left(\Phi_{t}-\beta\Gamma_{t}\right)\mathrm{d}t\\
+\mathrm{d}\Phi_{t} & =\left(\sigma_{t}^{2}-2\beta\Phi_{t}\right)\mathrm{d}t
+\end{cases}
+\]
+
+
+where $\sigma_{t}$ is the instantaneous volatility of the short-rate.
+
+
+\paragraph{Bond Price}
+
+In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
+the process representing the value of a bond $B\left(t,T\right)$
+at time $t$ and maturing at time $T$ is given by: 
+\[
+B\left(t,T\right)=\frac{B\left(0,T\right)}{B\left(0,t\right)}\exp\left[-\left(\frac{1}{2}k^{2}\left(t,T\right)\Phi\left(t\right)+\gamma\left(t,T\right)\Gamma\left(t\right)\right)\right]
+\]
+
+
+Under the risk-neutral measure, the Bond price can be obtained as
+follow:
+
+\[
+u^{bond}\left(t,x,y\right)=\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)\cdot1|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
+\]
+
+
+
+\paragraph{Derivatives contingent to the LIBOR rate}
+
+In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
+the LIBOR rate $L\left(t,T,T+\delta\right)$ at time $t$ over the
+period $\left[T,T+\delta\right]$ is given by the following process:
+
+\begin{eqnarray*}
+L\left(t,T,T+\delta\right) & = & \frac{1}{\delta}\left(\frac{B\left(t,T\right)}{B\left(t,T+\delta\right)}-1\right)\\
+ & = & \frac{1}{\delta}\left(\frac{B\left(0,T\right)}{B\left(0,T+\delta\right)}\exp\left[-\left(\frac{1}{2}\Phi\left(t\right)\left(k^{2}\left(t,T\right)-k^{2}\left(t,T+\delta\right)\right)+\Gamma\left(t\right)\left(\gamma\left(t,T\right)-\gamma\left(t,T+\delta\right)\right)\right)\right]-1\right)
+\end{eqnarray*}
+
+
+For a given payoff $g$, the price of the associated derivative is:
+
+\begin{eqnarray*}
+u\left(t,x,y\right) & = & \mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
+\end{eqnarray*}
+
+
+
+\section{Adding Uncertain Volatility}
+
+In the previous paragraph, the volatility process was unknown but
+defined. 
+
+In this paragraph, we will consider the set of volatility processes
+whose values are in the interval $\left[\underbar{\ensuremath{\sigma}},\bar{\sigma}\right]$:
+$\mathcal{F}_{vol}$
+
+For each volatility process $\sigma_{t}\in\mathcal{F}_{vol}$ is associated
+a risk-neutral measure $\mathbb{Q}^{\sigma_{t}}$.
+
+We can then define the upper-bound and the lower-bound price of derivatives
+valued under an HJM framework with a volatility process in $\mathcal{F}_{vol}$
+as:
+
+\begin{eqnarray*}
+\bar{u}\left(t,x,y\right) & = & \sup_{\mathbb{Q}^{\sigma_{t}}}\mathbb{E}^{\mathbb{Q}^{\sigma_{t}}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+\underbar{u}\left(t,x,y\right) & = & \inf_{\mathbb{Q}^{\sigma_{t}}}\mathbb{E}^{\mathbb{Q}^{\sigma_{t}}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
+\end{eqnarray*}
+
+
+The associated PDE is:
+\begin{eqnarray*}
+\partial_{t}u-2\beta\cdot y\cdot\partial_{y}u+\left(y-\beta x\right)\cdot\partial_{x}u+\frac{1}{2}\left(\partial_{xx}u+2\partial_{y}u\right)\cdot\Sigma^{2}\left(\partial_{xx}u+2\partial_{y}u\right)-\left(f\left(0,t\right)+x\right)\cdot u & = & 0\\
+u\left(T,x,y\right) & = & g\left(x,y\right)
+\end{eqnarray*}
+
+
+with $\Sigma$ being respectively
+\[
+\Sigma\left(x\right)=\begin{cases}
+\bar{\sigma} & x\ge0\\
+\underbar{\ensuremath{\sigma}} & x<0
+\end{cases}
+\]
+
+
+or 
+\[
+\Sigma\left(x\right)=\begin{cases}
+\bar{\sigma} & x<0\\
+\underbar{\ensuremath{\sigma}} & x\ge0
+\end{cases}
+\]
+
+
+
+\section{Simulation}
+
+Using an implicit finite difference scheme:
+\begin{eqnarray*}
+\frac{u_{i,j}^{n+1}-u_{i,j}^{n}}{t_{i,j}^{n+1}-t_{i,j}^{n}}-2\beta\cdot y_{i,j}^{n+1}\left[\frac{u_{i,j+1}^{n+1}-u_{i,j}^{n+1}}{y_{i,j+1}^{n+1}-y_{i,j}^{n+1}}\right]+\left(y_{i,j}^{n+1}-\beta x_{i,j}^{n+1}\right)\left[\frac{u_{i+1,j}^{n+1}-u_{i,j}^{n+1}}{x_{i+1,j}^{n+1}-x_{i,j}^{n+1}}\right]\\
++\frac{1}{2}\left(\left[\frac{u_{i+1,j}^{n+1}-2u_{i,j}^{n+1}+u_{i-1,j}^{n+1}}{\left(\frac{x_{i+1,j}^{n+1}-x_{i-1,j}^{n+1}}{2}\right)^{2}}\right]+2\left[\frac{u_{i,j+1}^{n+1}-u_{i,j}^{n+1}}{y_{i,j+1}^{n+1}-y_{i,j}^{n+1}}\right]\right)\cdot\left(\Sigma_{i,j}^{n+1}\right)^{2}-\left(f^{n+1}+x_{i,j}^{n+1}\right)\cdot u_{i,j}^{n+1} & = & 0
+\end{eqnarray*}
+
+
+with the following limit condition:
+\[
+u_{i,j}^{N}=g\left(x_{i,j}^{N},y_{i,j}^{N}\right)
+\]
+
+
+To simplify the computation the grid $\left(t,x,y\right)$ is considered
+regular and hence, 
+
+\[
+\begin{cases}
+\delta t & =t_{i,j}^{n+1}-t_{i,j}^{n}\\
+\delta y & =y_{i,j+1}^{n+1}-y_{i,j}^{n+1}\\
+\delta x & =x_{i+1,j}^{n+1}-x_{i,j}^{n+1}
+\end{cases}
+\]
+
+
+Assuming
+\begin{itemize}
+\item $\cdot$ to be the matrix multiplication operation
+\item $\circ$ to be the Hadamard product operation (element-wise multiplication).
+\end{itemize}
+The Euler Scheme can be vectorized:
+\begin{eqnarray*}
+U^{n} & = & U^{n+1}-2\beta\frac{\delta t}{\delta y}Y\circ\left(U^{n+1}\cdot B-U^{n+1}\right)+\frac{\delta t}{\delta x}\left(Y-\beta X\right)\circ\left(A\cdot U^{n+1}-U^{n+1}\right)\\
+ &  & +\frac{1}{2}\Sigma^{2}\circ\left(\frac{\delta t}{\delta x^{2}}\left(A\cdot U^{n+1}-2U^{u+1}+B\cdot U^{n+1}\right)+2\frac{\delta t}{\delta y}\left(U^{n+1}\cdot B-U^{n+1}\right)\right)\\
+ &  & -\delta t\left(F+X\right)\circ U^{n+1}
+\end{eqnarray*}
+where:
+
+\[
+A=\left[\begin{array}{cccc}
+0 & 1 &  & \left(0\right)\\
+ & \ddots & \ddots\\
+ &  & \ddots & 1\\
+\left(0\right) &  &  & 0
+\end{array}\right]
+\]
+
+
+\[
+B=\left[\begin{array}{cccc}
+0 &  &  & \left(0\right)\\
+1 & \ddots\\
+ & \ddots & \ddots\\
+\left(0\right) &  & 1 & 0
+\end{array}\right]
+\]
+
+
+The terminal condition being
+\[
+U^{N}=g\left(X,Y\right)
+\]
+
+\end{document}
