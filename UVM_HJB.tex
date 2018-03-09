@@ -35,184 +35,289 @@
 \section{The HJM Framework}
 
 In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
-the instantaneous forward rate is defined as 
+the instantaneous forward rate is defined as follow. For $t\leq T$:
 \[
-f\left(t,T\right)=f\left(0,T\right)+k\left(t,T\right)\Phi\left(t\right)\gamma\left(t,T\right)+k\left(t,T\right)\Gamma\left(t\right)
+f\left(t,T\right)=f_{0}\left(T\right)+k\left(t,T\right)\Phi\left(t\right)\gamma\left(t,T\right)+k\left(t,T\right)\Gamma\left(t\right)
 \]
 
 
-with
-
-\[
+where 
+\begin{itemize}
+\item $T\rightarrow f_{0}\left(T\right)$ is the zero curve with $f_{0}\left(0\right)$
+being today's fixing
+\item $k\left(t,T\right)=\exp\left(-\int_{t}^{T}\beta\left(s\right)\mathrm{d}s\right)$
+and $\gamma\left(t,T\right)=\int_{t}^{T}k\left(t,s\right)\mathrm{d}s$
+with $\beta_{t}$ being the mean-reversion parameter
+\item $\left(\Gamma,\Phi\right)_{t}$ is a Markovian system given by 
+\begin{equation}
 \begin{cases}
-k\left(t,T\right) & =\exp\left(-\beta\left(T-t\right)\right)\\
-\gamma\left(t,T\right) & =\frac{1-\exp\left(-\beta\left(T-t\right)\right)}{\beta}
-\end{cases}
-\]
+\mathrm{d}\Gamma_{t} & =\sigma_{t}\mathrm{d}W_{t}^{\mathbb{Q}}+\left(\Phi_{t}-\beta_{t}\Gamma_{t}\right)\mathrm{d}t\\
+\mathrm{d}\Phi_{t} & =\left(\sigma_{t}^{2}-2\beta_{t}\Phi_{t}\right)\mathrm{d}t\\
+\left(\Gamma_{0},\Phi_{0}\right) & =\left(0,0\right)
+\end{cases}\label{eq:Markov}
+\end{equation}
+
+\end{itemize}
+The instantaneous forward rate is fully defined by the mean-reversion
+$\beta_{t}$, the instantaneous volatility $\sigma_{t}$ of the short
+rate and the zero curve $f_{0}$.
 
 
-and 
-\[
-\begin{cases}
-\mathrm{d}\Gamma_{t} & =\sigma_{t}\mathrm{d}W_{t}^{\mathbb{Q}}+\left(\Phi_{t}-\beta\Gamma_{t}\right)\mathrm{d}t\\
-\mathrm{d}\Phi_{t} & =\left(\sigma_{t}^{2}-2\beta\Phi_{t}\right)\mathrm{d}t
-\end{cases}
-\]
+\subsection{Zero-Coupon Fixed rate Bond}
 
-
-where $\sigma_{t}$ is the instantaneous volatility of the short-rate.
-
-
-\paragraph{Bond Price}
-
-In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
-the process representing the value of a bond $B\left(t,T\right)$
-at time $t$ and maturing at time $T$ is given by: 
-\[
-B\left(t,T\right)=\frac{B\left(0,T\right)}{B\left(0,t\right)}\exp\left[-\left(\frac{1}{2}k^{2}\left(t,T\right)\Phi\left(t\right)+\gamma\left(t,T\right)\Gamma\left(t\right)\right)\right]
-\]
-
-
-Under the risk-neutral measure, the Bond price can be obtained as
-follow:
-
-\[
-u^{bond}\left(t,x,y\right)=\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)\cdot1|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
-\]
-
-
-
-\paragraph{Derivatives contingent to the LIBOR rate}
-
-In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
-the LIBOR rate $L\left(t,T,T+\delta\right)$ at time $t$ over the
-period $\left[T,T+\delta\right]$ is given by the following process:
-
+In th HJM framework, the price of zero-coupon fixed rate bond under
+the risk-neutral measure $\mathbb{Q}$ is given by, for $t\leq T$:
 \begin{eqnarray*}
-L\left(t,T,T+\delta\right) & = & \frac{1}{\delta}\left(\frac{B\left(t,T\right)}{B\left(t,T+\delta\right)}-1\right)\\
- & = & \frac{1}{\delta}\left(\frac{B\left(0,T\right)}{B\left(0,T+\delta\right)}\exp\left[-\left(\frac{1}{2}\Phi\left(t\right)\left(k^{2}\left(t,T\right)-k^{2}\left(t,T+\delta\right)\right)+\Gamma\left(t\right)\left(\gamma\left(t,T\right)-\gamma\left(t,T+\delta\right)\right)\right)\right]-1\right)
+B\left(t,T\right) & = & \exp\left[-\int_{t}^{T}f\left(t,s\right)\mathrm{d}s\right]\\
+ & = & \exp\left[-\int_{t}^{T}f_{0}\left(s\right)\mathrm{d}s\right]\exp\left[-\left(\frac{1}{2}\Phi\left(t\right)\gamma^{2}\left(t,T\right)+\Gamma\left(t\right)\gamma\left(t,T\right)\right)\right]
 \end{eqnarray*}
 
 
-For a given payoff $g$, the price of the associated derivative is:
+It can also be defined as follow
+\begin{equation}
+\begin{cases}
+u^{bond}\left(t,x,y\right) & =\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}f\left(s,s\right)\mathrm{d}s\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u^{bond}\left(T,x,y\right) & =1
+\end{cases}\label{eq:bond}
+\end{equation}
 
-\begin{eqnarray*}
-u\left(t,x,y\right) & = & \mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
-\end{eqnarray*}
 
+where $u^{bond}$ is the solution of the 2-dimensional PDE associated
+with the system $\left(\ref{eq:Markov}\right)$ with the terminal
+condition defined in $\left(\ref{eq:bond}\right)$.
+
+
+\subsection{LIBOR rate and European Options indexed on the LIBOR rate}
+
+Using the same notation defined in the previous section, the LIBOR
+rate $L\left(t,T,T+\delta\right)$ with tenor $\delta$ for $t\leq T$
+is defined by 
+\[
+L\left(t,T,T+\delta\right)=\frac{1}{\delta}\left[\frac{B\left(t,T\right)}{B\left(t,T+\delta\right)}-1\right]
+\]
+
+
+Considering a product paying a function $g$ of the LIBOR rate with
+tenor $\delta$ fixed at time $T$ at $T+\delta$. 
+
+Its value at time $t$ under the risk-neutral measure $\mathbb{Q}$
+is given by
+\begin{equation}
+\begin{cases}
+u\left(t,x,y\right) & =\mathbb{\mathbb{E}}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u\left(T,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)\cdot B\left(T,T+\delta\right)\\
+u\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+\end{cases}\label{eq:LIBORderivative}
+\end{equation}
+
+
+where $u$ is the solution of the 2-dimensional PDE associated with
+the system $\left(\ref{eq:Markov}\right)$ with the terminal condition
+defined in $\left(\ref{eq:LIBORderivative}\right)$.
 
 
 \section{Adding Uncertain Volatility}
 
-In the previous paragraph, the volatility process was unknown but
-defined. 
-
-In this paragraph, we will consider the set of volatility processes
-whose values are in the interval $\left[\underbar{\ensuremath{\sigma}},\bar{\sigma}\right]$:
-$\mathcal{F}_{vol}$
-
-For each volatility process $\sigma_{t}\in\mathcal{F}_{vol}$ is associated
-a risk-neutral measure $\mathbb{Q}^{\sigma_{t}}$.
-
-We can then define the upper-bound and the lower-bound price of derivatives
-valued under an HJM framework with a volatility process in $\mathcal{F}_{vol}$
-as:
-
-\begin{eqnarray*}
-\bar{u}\left(t,x,y\right) & = & \sup_{\mathbb{Q}^{\sigma_{t}}}\mathbb{E}^{\mathbb{Q}^{\sigma_{t}}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
-\underbar{u}\left(t,x,y\right) & = & \inf_{\mathbb{Q}^{\sigma_{t}}}\mathbb{E}^{\mathbb{Q}^{\sigma_{t}}}\left[\exp\left(-\int_{t}^{T}\left(f\left(0,s\right)+\Gamma\left(s\right)\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
-\end{eqnarray*}
+As stated in the previous section, the instantaneous forward curve
+as well as the pricing measure $\mathbb{Q}$ are dependent on the
+choice of the triplet $\left(\beta_{t},\sigma_{t},f_{0}\right)$.\\
 
 
-The associated PDE is:
-\begin{eqnarray*}
-\partial_{t}u-2\beta\cdot y\cdot\partial_{y}u+\left(y-\beta x\right)\cdot\partial_{x}u+\frac{1}{2}\left(\partial_{xx}u+2\partial_{y}u\right)\cdot\Sigma^{2}\left(\partial_{xx}u+2\partial_{y}u\right)-\left(f\left(0,t\right)+x\right)\cdot u & = & 0\\
-u\left(T,x,y\right) & = & g\left(x,y\right)
-\end{eqnarray*}
+From now on, the mean-reversion $\beta_{t}$ is supposed to be constant
+and hence, a pricing measure $\mathbb{Q}^{\sigma_{t}}$ is associated
+to a given volatility process $\sigma_{t}$. Let us notice that one
+volatility process can be associated to more than one pricing measure
+(if $\sigma_{t}$ is driven by its own Brownian motion for example).\\
 
 
-with $\Sigma$ being respectively
+Adding uncertain volatility in the HJM framework consists in considering
+all the possible volatility processes taking values in a given range
+$\left[\sigma_{inf},\sigma_{sup}\right]$ and computing the highest
+and the lowest possible prices of a product given all the possible
+associated pricing measures. Formally:
+\begin{itemize}
+\item Let $\mathcal{F}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
+be the set of all volatility processes $\sigma_{t}$ taking values
+in the range $\left[\sigma_{inf},\sigma_{sup}\right]$ for each $t\in\left[0,T\right]$.
+\item Let $\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
+be the set of all risk-neutral measures associated to all $\sigma_{t}\in\mathcal{F}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
+\item Considering a product paying a function $g$ of the LIBOR rate with
+tenor $\delta$ fixed at time $T$ at $T+\delta$, the highest and
+the lowest possible prices are defined by
+\begin{equation}
+\begin{cases}
+u_{sup}\left(t,x,y\right) & =\sup_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u_{sup}\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+\end{cases}\label{eq:supPrice}
+\end{equation}
+\begin{equation}
+\begin{cases}
+u_{inf}\left(t,x,y\right) & =\inf_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u_{inf}\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+\end{cases}\label{eq:infPrice}
+\end{equation}
+
+\end{itemize}
+It can be shown that $u_{inf}$ and $u_{sup}$ respectively satisfies
+the following non-linear PDEs
+\begin{equation}
+\partial_{t}u+\left(y-\beta x\right)\cdot\partial_{x}u-2\beta\cdot y\cdot\partial_{y}u+\frac{1}{2}\left(\partial_{xx}u+2\partial_{y}u\right)\cdot\Sigma_{inf}^{2}\left(\partial_{xx}u+2\partial_{y}u\right)-\left(f_{0}\left(t\right)+x\right)\cdot u=0\label{eq:infPDE}
+\end{equation}
+
+
+with 
 \[
-\Sigma\left(x\right)=\begin{cases}
-\bar{\sigma} & x\ge0\\
-\underbar{\ensuremath{\sigma}} & x<0
+\Sigma_{inf}\left(x\right)=\begin{cases}
+\sigma_{inf} & x\ge0\\
+\sigma_{sup} & x<0
 \end{cases}
 \]
 
 
-or 
+\begin{equation}
+\partial_{t}u+\left(y-\beta x\right)\cdot\partial_{x}u-2\beta\cdot y\cdot\partial_{y}u+\frac{1}{2}\left(\partial_{xx}u+2\partial_{y}u\right)\cdot\Sigma_{sup}^{2}\left(\partial_{xx}u+2\partial_{y}u\right)-\left(f_{0}\left(t\right)+x\right)\cdot u=0\label{eq:supPDE}
+\end{equation}
+
+
+with 
 \[
-\Sigma\left(x\right)=\begin{cases}
-\bar{\sigma} & x<0\\
-\underbar{\ensuremath{\sigma}} & x\ge0
+\Sigma_{sup}\left(x\right)=\begin{cases}
+\sigma_{sup} & x\ge0\\
+\sigma_{inf} & x<0
 \end{cases}
 \]
 
 
 
-\section{Simulation}
+\section{Numerical Schemes}
 
-Using an implicit finite difference scheme:
+Two discretization schemes will be used to solve the PDEs $\left(\ref{eq:infPDE}\right)$
+and $\left(\ref{eq:supPDE}\right)$: the explicit scheme and the ADI
+scheme.
+
+The grid $\left(t,x,y\right)$ is assumed to be ``isotropic'' in
+the sense that the x-axis is independent from coordinate $\left(t,y\right)$.
+Same along the y-axis and the t-axis.
+
+The partition of each axis is assumed to be regular for now. For $\left(i,j,n\right)\in\left[0,\dots,I\right]\times\left[0,\dots J\right]\times\left[0,\dots,N\right]$
 \begin{eqnarray*}
-\frac{u_{i,j}^{n+1}-u_{i,j}^{n}}{t_{i,j}^{n+1}-t_{i,j}^{n}}-2\beta\cdot y_{i,j}^{n+1}\left[\frac{u_{i,j+1}^{n+1}-u_{i,j}^{n+1}}{y_{i,j+1}^{n+1}-y_{i,j}^{n+1}}\right]+\left(y_{i,j}^{n+1}-\beta x_{i,j}^{n+1}\right)\left[\frac{u_{i+1,j}^{n+1}-u_{i,j}^{n+1}}{x_{i+1,j}^{n+1}-x_{i,j}^{n+1}}\right]\\
-+\frac{1}{2}\left(\left[\frac{u_{i+1,j}^{n+1}-2u_{i,j}^{n+1}+u_{i-1,j}^{n+1}}{\left(\frac{x_{i+1,j}^{n+1}-x_{i-1,j}^{n+1}}{2}\right)^{2}}\right]+2\left[\frac{u_{i,j+1}^{n+1}-u_{i,j}^{n+1}}{y_{i,j+1}^{n+1}-y_{i,j}^{n+1}}\right]\right)\cdot\left(\Sigma_{i,j}^{n+1}\right)^{2}-\left(f^{n+1}+x_{i,j}^{n+1}\right)\cdot u_{i,j}^{n+1} & = & 0
+x_{i} & = & x_{0}+i\cdot\delta x\\
+y_{j} & = & y_{0}+j\cdot\delta y\\
+t^{n} & = & t^{0}+n\cdot\delta t
 \end{eqnarray*}
+for
 
-
-with the following limit condition:
+The price $u\left(t,x,y\right)$ and its time and spatial derivatives
+are discretized as follow
 \[
-u_{i,j}^{N}=g\left(x_{i,j}^{N},y_{i,j}^{N}\right)
+u\left(t^{n},x_{i},y_{j}\right)=u_{i,j}^{n}
 \]
 
 
-To simplify the computation the grid $\left(t,x,y\right)$ is considered
-regular and hence, 
+\[
+\partial_{t}u\left(t^{n},x_{i},y_{j}\right)=\frac{u_{i,j}^{n+1}-u_{i,j}^{n}}{\delta t}
+\]
 
+
+\[
+\partial_{x}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i+1,j}^{n}-u_{i,j}^{n}}{\delta x} & i<I\\
+\frac{u_{i,j}^{n}-u_{i-1,j}^{n}}{\delta x} & i=I
+\end{cases}
+\]
+\[
+\partial_{y}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i,j+1}^{n}-u_{i,j}^{n}}{\delta y} & j<J\\
+\frac{u_{i,j}^{n}-u_{i,j-1}^{n}}{\delta y} & j=J
+\end{cases}
+\]
+
+
+\[
+\partial_{xx}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i+1,j}^{n}-u_{i,j}^{n}}{\delta x} & i=0\\
+\frac{u_{i+1,j}^{n}-2u_{i,j}^{n}+u_{i,j}^{n}}{\delta x^{2}} & 0<i<I\\
+\frac{u_{i,j}^{n}-u_{i-1,j}^{n}}{\delta x} & i=I
+\end{cases}
+\]
+
+
+
+\paragraph{Explicit Scheme}
+
+Solve backward from $N$ to $0$, for each $\left(i,j\right)$
+
+\begin{eqnarray*}
+u_{i,j}^{n} & = & u_{i,j}^{n+1}-\alpha^{0}u_{i,j}^{n+1}-\alpha^{x}u_{i,j}^{n+1}-\alpha^{y}u_{i,j}^{n+1}-\beta u_{i+1.j}^{n+1}-\gamma u_{i-1,j}^{n+1}-\zeta u_{i,j+1}^{n+1}-\eta u_{i,j-1}^{n+1}
+\end{eqnarray*}
+
+
+
+\paragraph{ADI Scheme}
+
+Solve the PDE backwardly from $N$ to $0$ in two steps. 
+\begin{enumerate}
+\item The scheme is explicit in the y-axis and implicit in the x-axis. For
+each ``column'' $j$, we have an equation of the form $Ax=b$ where
+$A$ is a tridiagonal matrix. We solve it to find the intermediate
+$u^{n+\frac{1}{2}}$ price.
+\[
+u_{i,j}^{n+1}-\alpha^{y}u_{i,j}^{n+1}-\zeta u_{i,j+1}^{n+1}-\eta u_{i,j-1}^{n+1}=\left(1+\alpha^{0}+\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}+\beta u_{i+1.j}^{n+\frac{1}{2}}+\gamma u_{i-1,j}^{n+\frac{1}{2}}
+\]
+
+\item The scheme is implicit in the y-axis and explicit in the y-axis. For
+each ``row'' $i$, we have an equation of the form $Ax=b$ where
+$A$ is a tridiagonal matrix. We solve it to find the intermediate
+$u^{n}$ price.
+\end{enumerate}
+\[
+u_{i,j}^{n+\frac{1}{2}}-\alpha^{x}u_{i,j}^{n+\frac{1}{2}}-\beta u_{i+1,j}^{n+\frac{1}{2}}-\gamma u_{i-1,j}^{n+\frac{1}{2}}=\left(1+\alpha^{0}+\alpha^{y}\right)u_{i,j}^{n}+\zeta u_{i.j+1}^{n}+\eta u_{i,j-1}^{n}
+\]
+
+
+where:
+\begin{itemize}
+\item $\alpha_{0}$ is the coefficient in front of $u_{i,j}$ coming from
+the ``$u$'' term 
+\item $\alpha_{x}$ is the coefficient in front of $u_{i,j}$ coming from
+the ``$\partial_{x}u$'' term
+\item $\alpha_{y}$ is the coefficient in front of $u_{i,j}$ coming from
+the ``$\partial_{y}u$'' term
+\item $\beta$ is the coefficient in front of $u_{i+1,j}$ coming from the
+``$\partial_{x}u$'' and ``$\partial_{xx}u$'' terms
+\item $\gamma$ is the coefficient in front of $u_{i-1,j}$ coming from
+the ``$\partial_{x}u$'' and ``$\partial_{xx}u$'' terms
+\item $\zeta$ is the coefficient in front of $u_{i,j+1}$ coming from the
+``$\partial_{y}u$'' 
+\item $\eta$ is the coefficient in front of $u_{i,j-1}$ coming from the
+``$\partial_{y}u$''
+\end{itemize}
+For the explicit scheme, at step $n$, the coefficients $\alpha_{0}$,$\alpha_{x}$,
+$\alpha_{y}$, $\beta$, $\gamma$, $\zeta$, $\eta$ are computed
+using information from step $n+1$ and are dependent from the spatial
+position $\left(i,j\right)$.
+
+For the ADI scheme, In the first step, the coefficients $\alpha_{y}$
+is computed from $u^{n+1}$ terms while $\beta$ and $\gamma$ are
+computed using $u^{n+\frac{1}{2}}$ terms that are unknown.
+
+The vectorized problem writes, for each column $j$
+\[
+A\left(u_{\cdot,j}^{n+\frac{1}{2}}\right)u_{\cdot,j}^{n+\frac{1}{2}}=b\left(u_{\cdot,j}^{n+1}\right)
+\]
+
+
+where $A$ is the tridiagonal matrix. The solution $u_{\cdot,j}^{n+\frac{1}{2}}$
+is found by iterating the following scheme until the matrix $A^{k}$
+converges:
 \[
 \begin{cases}
-\delta t & =t_{i,j}^{n+1}-t_{i,j}^{n}\\
-\delta y & =y_{i,j+1}^{n+1}-y_{i,j}^{n+1}\\
-\delta x & =x_{i+1,j}^{n+1}-x_{i,j}^{n+1}
+A\left(u_{\cdot,j}^{n+\frac{1}{2},k-1}\right)u_{\cdot,j}^{n+\frac{1}{2},k} & =b\left(u_{\cdot,j}^{n+1}\right)\\
+u_{\cdot,j}^{n+\frac{1}{2},0} & =u_{\cdot,j}^{n+1}
 \end{cases}
 \]
 
 
-Assuming
-\begin{itemize}
-\item $\cdot$ to be the matrix multiplication operation
-\item $\circ$ to be the Hadamard product operation (element-wise multiplication).
-\end{itemize}
-The Euler Scheme can be vectorized:
-\begin{eqnarray*}
-U^{n} & = & U^{n+1}-2\beta\frac{\delta t}{\delta y}Y\circ\left(U^{n+1}\cdot B-U^{n+1}\right)+\frac{\delta t}{\delta x}\left(Y-\beta X\right)\circ\left(A\cdot U^{n+1}-U^{n+1}\right)\\
- &  & +\frac{1}{2}\Sigma^{2}\circ\left(\frac{\delta t}{\delta x^{2}}\left(A\cdot U^{n+1}-2U^{u+1}+B\cdot U^{n+1}\right)+2\frac{\delta t}{\delta y}\left(U^{n+1}\cdot B-U^{n+1}\right)\right)\\
- &  & -\delta t\left(F+X\right)\circ U^{n+1}
-\end{eqnarray*}
-where:
-
-\[
-A=\left[\begin{array}{cccc}
-0 & 1 &  & \left(0\right)\\
- & \ddots & \ddots\\
- &  & \ddots & 1\\
-\left(0\right) &  &  & 0
-\end{array}\right]
-\]
-
-
-\[
-B=\left[\begin{array}{cccc}
-0 &  &  & \left(0\right)\\
-1 & \ddots\\
- & \ddots & \ddots\\
-\left(0\right) &  & 1 & 0
-\end{array}\right]
-\]
-
-
-The terminal condition being
-\[
-U^{N}=g\left(X,Y\right)
-\]
-
+The same problem occurs in the second step and a similar algorithm
+is used.
 \end{document}
