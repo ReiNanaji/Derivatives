@@ -262,7 +262,7 @@ each ``column'' $j$, we have an equation of the form $Ax=b$ where
 $A$ is a tridiagonal matrix. We solve it to find the intermediate
 $u^{n+\frac{1}{2}}$ price.
 \[
-u_{i,j}^{n+1}-\alpha^{y}u_{i,j}^{n+1}-\zeta u_{i,j+1}^{n+1}-\eta u_{i,j-1}^{n+1}=\left(1+\alpha^{0}+\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}+\beta u_{i+1.j}^{n+\frac{1}{2}}+\gamma u_{i-1,j}^{n+\frac{1}{2}}
+\left(1-\frac{1}{2}\alpha^{0}-\frac{1}{2}\alpha^{y}\right)u_{i,j}^{n+1}-\frac{1}{2}\zeta u_{i,j+1}^{n+1}-\frac{1}{2}\eta u_{i,j-1}^{n+1}=\left(1+\frac{1}{2}\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}+\frac{1}{2}\beta u_{i+1.j}^{n+\frac{1}{2}}+\frac{1}{2}\gamma u_{i-1,j}^{n+\frac{1}{2}}
 \]
 
 \item The scheme is implicit in the y-axis and explicit in the y-axis. For
@@ -271,7 +271,7 @@ $A$ is a tridiagonal matrix. We solve it to find the intermediate
 $u^{n}$ price.
 \end{enumerate}
 \[
-u_{i,j}^{n+\frac{1}{2}}-\alpha^{x}u_{i,j}^{n+\frac{1}{2}}-\beta u_{i+1,j}^{n+\frac{1}{2}}-\gamma u_{i-1,j}^{n+\frac{1}{2}}=\left(1+\alpha^{0}+\alpha^{y}\right)u_{i,j}^{n}+\zeta u_{i.j+1}^{n}+\eta u_{i,j-1}^{n}
+\left(1-\frac{1}{2}\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}-\frac{1}{2}\beta u_{i+1,j}^{n+\frac{1}{2}}-2\gamma u_{i-1,j}^{n+\frac{1}{2}}=\left(1+\frac{1}{2}\alpha^{0}+\frac{1}{2}\alpha^{y}\right)u_{i,j}^{n}+\frac{1}{2}\zeta u_{i.j+1}^{n}+\frac{1}{2}\eta u_{i,j-1}^{n}
 \]
 
 
