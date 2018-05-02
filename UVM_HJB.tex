@@ -6,10 +6,13 @@
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
 \usepackage{geometry}
-\geometry{verbose,tmargin=2cm,lmargin=2cm}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm,headheight=31.941cm}
 \usepackage{babel}
+\usepackage{float}
+\usepackage{url}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{graphicx}
 \usepackage{esint}
 \usepackage[unicode=true,
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
@@ -19,10 +22,144 @@
  pdfauthor={Vathana.S.Leang}}
 
 \makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Special footnote code from the package 'stblftnt.sty'
+%% Author: Robin Fairbairns -- Last revised Dec 13 1996
+\let\SF@@footnote\footnote
+\def\footnote{\ifx\protect\@typeset@protect
+    \expandafter\SF@@footnote
+  \else
+    \expandafter\SF@gobble@opt
+  \fi
+}
+\expandafter\def\csname SF@gobble@opt \endcsname{\@ifnextchar[%]
+  \SF@gobble@twobracket
+  \@gobble
+}
+\edef\SF@gobble@opt{\noexpand\protect
+  \expandafter\noexpand\csname SF@gobble@opt \endcsname}
+\def\SF@gobble@twobracket[#1]#2{}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 \numberwithin{equation}{section}
 \numberwithin{figure}{section}
 \numberwithin{table}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[T1]{fontenc} % MiKTeX as ltxbase
+\usepackage[latin9]{inputenc} % MiKTeX as ltxbase
+\usepackage{lmodern} % for modern T1 fonts
+
+% hyphenation patterns for English
+
+
+% euro symbol
+\usepackage{eurosym} % MiKTeX as eurosym
+
+% used to prevent footnotes from disapearing when placed inside tables/other
+\usepackage{footnote} % MiKTeX as mdwtools
+
+% remove the default identation of new paragraphs
+\usepackage{parskip} % MiKTeX as parskip
+
+
+% for cross references
+%\usepackage{hyperref} % MiKTeX as hyperref
+\usepackage{bookmark} % MiKTeX as oberdiek
+
+% for math
+\usepackage{amsmath,amssymb,amsthm} % MiKTeX as amsmath, amscls
+\usepackage{thmtools,thm-restate} % MiKTeX as thmtools
+
+% for functions defined by branches
+\usepackage{cases} % MiKTeX as cases
+
+% for double stroke mathematical symbols
+\usepackage{dsfont} % MiKTeX as dstroke
+
+% to allow the use of appendices
+\usepackage[titletoc,toc,title]{appendix} % MiKTeX as appendix
+
+% to allow fixing a float in the place where it is declared
+\usepackage{float} % MiKTeX as float
+
+% used to color and highlight text. Used in the definition of \ins, \del, \hlt.
+\usepackage[usenames,dvipsnames]{xcolor} % MiKTeX as xcolor
+
+% insert comments in the PDF. Used in the definition of \cmt.
+\usepackage{pdfcomment} % MiKTeX as pdfcomment, bezos
+
+% decorate text. Used in the definition of \ins and \del.
+\usepackage[normalem]{ulem} % MiKTeX as ulem
+
+% makes figure and table captions prettier
+\usepackage[font=small,labelfont=bf,margin=0.4cm]{caption} % MiKTeX as caption
+
+% to include figures in the text
+\usepackage{graphicx} % MiKTeX as graphics
+
+% "Tikz is probably the most complex and powerful tool to create graphic elements."
+% https://www.sharelatex.com/learn/TikZ_package
+\usepackage{tikz} % MiKTeX as pgf
+
+% packages used in the composition of the Scope of Approval part of the Valuation Model template
+% multi-column typesetting mechanism
+\usepackage{framed} % MiKTeX as framed
+%\usepackage{mdframed} % MiKTeX as mdframed and l3kernel - the two are needed
+%\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+%\let\endchangemargin=\endlist
+%\newmdenv[
+  %skipabove=\parskip,
+  %linewidth=0.8pt,
+  %%innertopmargin = 0pt,
+  %%leftmargin = 0pt,
+  %%innerleftmargin = 1em,
+  %%innerbottommargin = 0pt,
+  %%innerrightmargin = 0pt,
+  %%rightmargin = 0pt,
+  %%topline = true,
+  %%rightline = true,
+  %%bottomline = true,
+%]{simpleFrame}
+
+% used in template development to fill in sections with random text
+%\usepackage{lipsum} % MiKTeX as lipsum
+
+% packages used to compose the header and footer of the MRG template
+\usepackage{fancyhdr} % MiKTeX as fancyhdr
+
+% to control itemized lists and enumerations
+\usepackage{enumitem} %MiKTeX as enumitem
+
+% standard array and tabular environments
+\usepackage{array} % MiKTeX as tools
+
+% packages to customize the tables of the MRG template
+% colored table cells and headings
+\usepackage{colortbl} % MiKTeX as colortbl
+% tables that span over multiple pages
+\usepackage{longtable} % MiKTeX as tools
+% easier interface than tabular to control table size
+\usepackage{tabularx} % MiKTeX as tools
+% new column  definition to lighten the usage of tabularx
+\newcolumntype{L}[1]{>{\hsize=#1\hsize\raggedright\arraybackslash}X}
+\newcolumntype{R}[1]{>{\hsize=#1\hsize\raggedleft\arraybackslash}X}
+\newcolumntype{C}[1]{>{\hsize=#1\hsize\centering\arraybackslash}X}
+%\newcolumntype{C}{>{\centering\arraybackslash}X}
+% writing professional tables
+\usepackage{booktabs}
+
+% The forloop package provides the command \forloop for the user.
+\usepackage{forloop} % MiKTeX as forloop
+
+\usepackage{xstring} % MiKTeX as xstring
+
+\usepackage{etoolbox} % MiKTeX as etoolbox
+
+\usepackage[ruled,vlined]{algorithm2e} % MiKTeX as algorithm2e
+
+\usepackage{multirow} % MiKTeX as multirow
 
 \makeatother
 
@@ -30,50 +167,57 @@
 
 \title{Uncertain Volatility in the HJM Framework}
 
+
+\author{Vathana Leang}
+
 \maketitle
 
-\section{The HJM Framework}
+\section{The HJM Framework%
+\footnote{Demonstration in Appendix \ref{sub:DerivationHJM}%
+}}
 
 In the HJM framework, under the risk-neutral measure $\mathbb{Q}$,
 the instantaneous forward rate is defined as follow. For $t\leq T$:
 \[
-f\left(t,T\right)=f_{0}\left(T\right)+k\left(t,T\right)\Phi\left(t\right)\gamma\left(t,T\right)+k\left(t,T\right)\Gamma\left(t\right)
+f\left(t,T\right)=f_{0}\left(T\right)+k\left(t,T\right)\Phi_{t}\gamma\left(t,T\right)+k\left(t,T\right)\Gamma_{t}
 \]
 
 
 where 
 \begin{itemize}
-\item $T\rightarrow f_{0}\left(T\right)$ is the zero curve with $f_{0}\left(0\right)$
-being today's fixing
+\item $T\rightarrow f_{0}\left(T\right)$ is the current instantaneous rate
+curve bootstrapped from market instruments. This curve is assumed
+to be deterministic. The first point $f_{0}\left(0\right)$ is today's
+fixing.
 \item $k\left(t,T\right)=\exp\left(-\int_{t}^{T}\beta\left(s\right)\mathrm{d}s\right)$
 and $\gamma\left(t,T\right)=\int_{t}^{T}k\left(t,s\right)\mathrm{d}s$
-with $\beta_{t}$ being the mean-reversion parameter
+with $T\rightarrow\beta\left(T\right)$ being the term structure of
+the time-dependent mean-reversion parameter.
 \item $\left(\Gamma,\Phi\right)_{t}$ is a Markovian system given by 
 \begin{equation}
 \begin{cases}
 \mathrm{d}\Gamma_{t} & =\sigma_{t}\mathrm{d}W_{t}^{\mathbb{Q}}+\left(\Phi_{t}-\beta_{t}\Gamma_{t}\right)\mathrm{d}t\\
-\mathrm{d}\Phi_{t} & =\left(\sigma_{t}^{2}-2\beta_{t}\Phi_{t}\right)\mathrm{d}t\\
-\left(\Gamma_{0},\Phi_{0}\right) & =\left(0,0\right)
+\mathrm{d}\Phi_{t} & =\left(\sigma_{t}^{2}-2\beta_{t}\Phi_{t}\right)\mathrm{d}t
 \end{cases}\label{eq:Markov}
 \end{equation}
 
 \end{itemize}
-The instantaneous forward rate is fully defined by the mean-reversion
-$\beta_{t}$, the instantaneous volatility $\sigma_{t}$ of the short
-rate and the zero curve $f_{0}$.
+The distribution of the instantaneous forward rate is fully characterized
+by the mean-reversion $\beta$ and the instantaneous volatility $\sigma_{t}$
+of the short rate.
 
 
-\subsection{Zero-Coupon Fixed rate Bond}
+\subsection{Zero-Coupon Bond\label{sub:Zero-Coupon-Bond}}
 
-In th HJM framework, the price of zero-coupon fixed rate bond under
-the risk-neutral measure $\mathbb{Q}$ is given by, for $t\leq T$:
-\begin{eqnarray*}
-B\left(t,T\right) & = & \exp\left[-\int_{t}^{T}f\left(t,s\right)\mathrm{d}s\right]\\
- & = & \exp\left[-\int_{t}^{T}f_{0}\left(s\right)\mathrm{d}s\right]\exp\left[-\left(\frac{1}{2}\Phi\left(t\right)\gamma^{2}\left(t,T\right)+\Gamma\left(t\right)\gamma\left(t,T\right)\right)\right]
-\end{eqnarray*}
+In th HJM framework, at time $t\leq T$, the price of zero-coupon
+bond, maturing at time $T$ is given by: 
+\begin{eqnarray}
+B\left(t,T\right) & = & \exp\left[-\int_{t}^{T}f\left(t,s\right)\mathrm{d}s\right]\nonumber \\
+ & = & \exp\left[-\int_{t}^{T}f_{0}\left(s\right)\mathrm{d}s\right]\exp\left[-\left(\frac{1}{2}\Phi\left(t\right)\gamma^{2}\left(t,T\right)+\Gamma\left(t\right)\gamma\left(t,T\right)\right)\right]\label{eq:bondPrice}
+\end{eqnarray}
 
 
-It can also be defined as follow
+The price can also be computed as follow
 \begin{equation}
 \begin{cases}
 u^{bond}\left(t,x,y\right) & =\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T}f\left(s,s\right)\mathrm{d}s\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
@@ -82,84 +226,241 @@ u^{bond}\left(T,x,y\right) & =1
 \end{equation}
 
 
-where $u^{bond}$ is the solution of the 2-dimensional PDE associated
-with the system $\left(\ref{eq:Markov}\right)$ with the terminal
-condition defined in $\left(\ref{eq:bond}\right)$.
+where $u^{bond}$ is the solution of the PDE associated with the system
+$\left(\ref{eq:Markov}\right)$ with the terminal condition defined
+in $\left(\ref{eq:bond}\right)$.
+
+Note that the bond price is independent from the volatility process.
 
 
-\subsection{LIBOR rate and European Options indexed on the LIBOR rate}
+\subsection{LIBOR and Vanilla Options Indexed on the LIBOR}
 
-Using the same notation defined in the previous section, the LIBOR
-rate $L\left(t,T,T+\delta\right)$ with tenor $\delta$ for $t\leq T$
+Using the same notations defined in the section \ref{sub:Zero-Coupon-Bond},
+the forward rate seen at time $t\leq T$ over the period $\left[T,T+\delta\right]$
 is defined by 
 \[
 L\left(t,T,T+\delta\right)=\frac{1}{\delta}\left[\frac{B\left(t,T\right)}{B\left(t,T+\delta\right)}-1\right]
 \]
 
 
-Considering a product paying a function $g$ of the LIBOR rate with
-tenor $\delta$ fixed at time $T$ at $T+\delta$. 
+Considering a product paying at time $T+\delta$ a function $g$ of
+the LIBOR with tenor $\delta$ fixing at time $T$. 
 
-Its value at time $t$ under the risk-neutral measure $\mathbb{Q}$
-is given by
+Its value at time $t$ is given by
 \begin{equation}
 \begin{cases}
-u\left(t,x,y\right) & =\mathbb{\mathbb{E}}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
-u\left(T,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)\cdot B\left(T,T+\delta\right)\\
-u\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+u\left(t,x,y\right) & =\mathbb{\mathbb{E}}_{t}^{\mathbb{Q}}\left[\delta\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u\left(T,x,y\right) & =\delta g\left(L\left(T,T,T+\delta\right)\right)B\left(T.T+\delta\right)
 \end{cases}\label{eq:LIBORderivative}
 \end{equation}
 
 
-where $u$ is the solution of the 2-dimensional PDE associated with
-the system $\left(\ref{eq:Markov}\right)$ with the terminal condition
-defined in $\left(\ref{eq:LIBORderivative}\right)$.
+where $u$ is the solution of the PDE associated with the system $\left(\ref{eq:Markov}\right)$
+with the terminal condition defined in $\left(\ref{eq:LIBORderivative}\right)$.
+
+Note that the forward LIBOR (g is the identity) is independent from
+the volatility process.
 
 
-\section{Adding Uncertain Volatility}
+\subsection{Swap Rate and Vanilla Options Indexed on the Swap Rate}
+
+Using the same notations defined in the section \ref{sub:Zero-Coupon-Bond},
+the swap rate associated with a fixed for float swap is given by
+\[
+S_{t}=\frac{\sum_{j=1}^{M}\beta_{j}B\left(t,\tau_{j+1}\right)L\left(t,\tau_{j},\tau_{j+1}\right)}{\sum_{i=1}^{N}\alpha_{i}B\left(t,T_{i}\right)}
+\]
+
+
+where
+\begin{itemize}
+\item $\alpha_{i}$ and $\beta_{j}$ are the day count fractions of the
+fixed and the float leg.
+\item $\tau_{1}=T_{1}$ is the first payment date.
+\item $\tau_{M}=T_{N}$ is the last payment date.
+\end{itemize}
+Considering a product paying multiple cash flow with a constant coupon
+rate being a function $g$ of the swap rate fixing at the $T_{1}$.
+The payment dates of the product coincide with the ones of the swap
+rate.
+
+Its value at time $t<T_{1}$ under the risk-neutral measure $\mathbb{Q}$
+is given by
+\begin{equation}
+\begin{cases}
+u\left(t,x,y\right) & =\mathbb{E}_{t}^{\mathbb{Q}}\left[\sum_{i=1}^{N}\alpha_{i}\exp\left(-\int_{t}^{T_{i}}f\left(s,s\right)\mathrm{d}s\right)g\left(S_{T}\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u\left(T,x,y\right) & =g\left(S_{T}\right)\sum_{i=1}^{N}\alpha_{i}B\left(t,T_{i}\right)
+\end{cases}\label{eq:Swapderivative}
+\end{equation}
+
+
+where $u$ is the solution of the PDE associated with the system $\left(\ref{eq:Markov}\right)$
+with the terminal condition defined in $\left(\ref{eq:Swapderivative}\right)$. 
+
+Note that the forward swap rate is independent from the volatility
+process. 
+
+
+\subsection{Structured Products}
+
+In this section we consider a product paying cash-flows with fixed
+coupon rate or coupon rates being function of the LIBOR at successive
+fixing dates $\left\{ \tau_{j}\right\} _{1\leq j\leq M}$. 
+
+The value at time $t<\tau_{1}$ is given by: 
+\[
+u\left(t,x,y\right)=\mathbb{E}_{t}^{\mathbb{Q}}\left[\sum_{j=1}^{M}\beta_{j}\exp\left(-\int_{t}^{\tau_{j+1}}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(t,\tau_{j},\tau_{j+1}\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]
+\]
+
+
+In this setting, by lineary, the expectation $\mathbb{E}$ and the
+sum $\sum$ can be swapped and the different cash-flows can be computed
+independently. 
+
+In the Uncertain Volatility Framework introduced in the section \ref{sec:The-Uncertain-Volatility},
+the symbol swap requires caution.
+
+
+\section{The Uncertain Volatility Framework\label{sec:The-Uncertain-Volatility}}
 
 As stated in the previous section, the instantaneous forward curve
 as well as the pricing measure $\mathbb{Q}$ are dependent on the
-choice of the triplet $\left(\beta_{t},\sigma_{t},f_{0}\right)$.\\
+choice of the pair $\left(\beta,\sigma_{t}\right)$.\\
 
 
-From now on, the mean-reversion $\beta_{t}$ is supposed to be constant
-and hence, a pricing measure $\mathbb{Q}^{\sigma_{t}}$ is associated
-to a given volatility process $\sigma_{t}$. Let us notice that one
-volatility process can be associated to more than one pricing measure
-(if $\sigma_{t}$ is driven by its own Brownian motion for example).\\
+From now on, the mean-reversion $\beta$ is supposed to be constant
+and time-independent. A pricing measure $\mathbb{Q}^{\sigma_{t}}$
+is then associated to a given volatility process $\sigma_{t}$. Let
+us notice that one volatility process can be associated to more than
+one pricing measure (if $\sigma_{t}$ is driven by its own Brownian
+motion for example).\\
 
 
-Adding uncertain volatility in the HJM framework consists in considering
-all the possible volatility processes taking values in a given range
-$\left[\sigma_{inf},\sigma_{sup}\right]$ and computing the highest
-and the lowest possible prices of a product given all the possible
-associated pricing measures. Formally:
+In the Uncertain Volatility Framework, rather than specifying the
+dynamics of the volatility (e.g. considering a deterministic and time-independent
+constant volatility), a family of volatility processes is considered
+instead. For example, we can consider all the possible volatility
+processes taking values in a given range $\left[\sigma_{inf},\sigma_{sup}\right]$.
+The specification of the family is thus reduced to two parameters.
+The methodology to choose those parameters will be discussed later.
+Finally us note that the two parameters can be made time-dependent
+to account for different volatility regime. \\
+
+
+Formally:
 \begin{itemize}
-\item Let $\mathcal{F}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
+\item Let $\Sigma_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
 be the set of all volatility processes $\sigma_{t}$ taking values
 in the range $\left[\sigma_{inf},\sigma_{sup}\right]$ for each $t\in\left[0,T\right]$.
 \item Let $\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
-be the set of all risk-neutral measures associated to all $\sigma_{t}\in\mathcal{F}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
-\item Considering a product paying a function $g$ of the LIBOR rate with
-tenor $\delta$ fixed at time $T$ at $T+\delta$, the highest and
-the lowest possible prices are defined by
+be the set of all risk-neutral measures associated to all $\sigma_{t}\in\Sigma_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$
+\end{itemize}
+Rather than computing one price associated to one pricing measure,
+we will compute the upper and the lower bound prices for pricing measures
+$\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T\right]}$.
+This gives us a conservative range on the price of an asset given
+the two bounds $\sigma_{inf}$ and $\sigma_{sup}$.
+
+
+\subsection{Vanilla Instruments indexed on a single fixing of the LIBOR}
+
+Considering a product paying at time $T+\delta$ a function $g$ of
+the LIBOR with tenor $\delta$ fixing at time $T$. The upper and
+lower bound prices are given by
 \begin{equation}
 \begin{cases}
 u_{sup}\left(t,x,y\right) & =\sup_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
-u_{sup}\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+u_{sup}\left(T,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)B\left(T.T+\delta\right)
 \end{cases}\label{eq:supPrice}
 \end{equation}
 \begin{equation}
 \begin{cases}
 u_{inf}\left(t,x,y\right) & =\inf_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\exp\left(-\int_{t}^{T+\delta}f\left(s,s\right)\mathrm{d}s\right)g\left(L\left(T,T,T+\delta\right)\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
-u_{inf}\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)
+u_{inf}\left(T+\delta,x,y\right) & =g\left(L\left(T,T,T+\delta\right)\right)B\left(T.T+\delta\right)
 \end{cases}\label{eq:infPrice}
 \end{equation}
 
-\end{itemize}
-It can be shown that $u_{inf}$ and $u_{sup}$ respectively satisfies
-the following non-linear PDEs
+
+$u_{sup}$ and $u_{inf}$ are solutions of non-linear PDEs presented
+in the section \ref{sub:Non-Linear-Pricing-PDE}.
+
+
+\subsection{Vanilla Instruments indexed on a basket of fixings of the LIBOR}
+
+Considering a multiple cash-flow product contingent on different fixings
+of the LIBOR, in the Uncertain Volatility framework, the different
+cashflows cannot be valued independently. Indeed, given that $\sup\sum\leq\sum\sup$
+and $\inf\sum\geq\sum\inf$, the range of price obtained will not
+be optimal (i.e. the most narrow range containing the prices under
+the pricing measures of $\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}$)
+.\\
+
+
+To get the optimal range, the product must be valued iteratively in
+a backward fashion as follow. Considering the payment dates $\left\{ \tau_{j}\right\} _{1\leq j\leq M}$.
+\begin{enumerate}
+\item $u\left(\tau_{M},x,y\right)=0$, $\beta_{M+1}=0$
+\item For $j$ from $M$ to $1$
+
+\begin{enumerate}
+\item $u\left(\tau_{j},x,y\right)=\beta_{j}B\left(\tau_{j},\tau_{j+1}\right)g\left(L\left(\tau_{j},\tau_{j},\tau_{j+1}\right)\right)+u\left(\tau_{j}^{+},x,y\right)$
+\item For $t\in\left[\tau_{j-1},\tau_{j}\right[$, solve backwardly for
+$u\left(t,x,y\right)$ with the updated terminal condition defined
+above and the pricing PDE described in the next section
+\end{enumerate}
+\end{enumerate}
+
+
+Intuitively, there exists a volatility process $\sigma_{t}$ that
+is achieving the maximum and the minimum of the structure product
+price. 
+
+By starting from the last cash flow that prevails on the interval
+$\left[\tau_{M-1},\tau_{M}\right]$, we are looking for the optimal
+volatility process between $\left[\tau_{M-1},\tau_{M}\right]$. 
+
+Once this is done, the process will be ``frozen'' on $\left[\tau_{M-1},\tau_{M}\right]$
+given that the prices of the remaining cash-flows do not depend on
+that portion of the volatility process. 
+
+We move to the next interval, corresponding to the next cash-flow
+and look for the optimal volatility on that interval.
+
+Hence, Pricing a complex cash-flow products with the Uncertain volatility
+requires to first divide the time interval with the payment dates
+of each leg. 
+
+
+\subsection{Vanilla Instruments indexed on a fixing of the Swap rate}
+
+Considering a product paying multiple cash flow with a constant coupon
+rate being a function $g$ of the swap rate fixing at the $T_{1}$.
+The payment dates of the product coincide with the ones of the swap
+rate. The upper and lower bound prices are given by
+
+\begin{equation}
+\begin{cases}
+u_{sup}\left(t,x,y\right) & =\sup_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\sum_{i=1}^{N}\alpha_{i}\exp\left(-\int_{t}^{T_{i}}f\left(s,s\right)\mathrm{d}s\right)g\left(S_{T}\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u_{sup}\left(T,x,y\right) & =g\left(S_{T}\right)\sum_{i=1}^{N}\alpha_{i}B\left(t,T_{i}\right)
+\end{cases}\label{eq:supPrice-1}
+\end{equation}
+\begin{equation}
+\begin{cases}
+u_{inf}\left(t,x,y\right) & =\inf_{\mathbb{Q}\in\mathcal{Q}_{\left[\sigma_{inf},\sigma_{sup}\right]}^{\left[0,T+\delta\right]}}\mathbb{E}_{t}^{\mathbb{Q}}\left[\sum_{i=1}^{N}\alpha_{i}\exp\left(-\int_{t}^{T_{i}}f\left(s,s\right)\mathrm{d}s\right)g\left(S_{T}\right)|\Gamma\left(t\right)=x,\Phi\left(t\right)=y\right]\\
+u_{inf}\left(T+\delta,x,y\right) & =g\left(S_{T}\right)\sum_{i=1}^{N}\alpha_{i}B\left(t,T_{i}\right)
+\end{cases}\label{eq:infPrice-1}
+\end{equation}
+
+
+$u_{sup}$ and $u_{inf}$ are solutions of non-linear PDEs presented
+in the section \ref{sub:Non-Linear-Pricing-PDE}.
+
+
+\subsection{Non-Linear Pricing PDE\label{sub:Non-Linear-Pricing-PDE}}
+
+$u_{inf}$ and $u_{sup}$ respectively satisfies the following non-linear
+PDEs%
+\footnote{Demonstraction in the Appendix \ref{sub:DerivationHJB}.%
+}
 \begin{equation}
 \partial_{t}u+\left(y-\beta x\right)\cdot\partial_{x}u-2\beta\cdot y\cdot\partial_{y}u+\frac{1}{2}\left(\partial_{xx}u+2\partial_{y}u\right)\cdot\Sigma_{inf}^{2}\left(\partial_{xx}u+2\partial_{y}u\right)-\left(f_{0}\left(t\right)+x\right)\cdot u=0\label{eq:infPDE}
 \end{equation}
@@ -188,6 +489,9 @@ with
 \]
 
 
+The terminal condition of the PDEs corresponds to the payoff of the
+various products. 
+
 
 \section{Numerical Schemes}
 
@@ -205,42 +509,16 @@ x_{i} & = & x_{0}+i\cdot\delta x\\
 y_{j} & = & y_{0}+j\cdot\delta y\\
 t^{n} & = & t^{0}+n\cdot\delta t
 \end{eqnarray*}
-for
+term 
 
-The price $u\left(t,x,y\right)$ and its time and spatial derivatives
-are discretized as follow
+The price $u\left(t,x,y\right)$ is discretized as follow
 \[
 u\left(t^{n},x_{i},y_{j}\right)=u_{i,j}^{n}
 \]
 
 
-\[
-\partial_{t}u\left(t^{n},x_{i},y_{j}\right)=\frac{u_{i,j}^{n+1}-u_{i,j}^{n}}{\delta t}
-\]
-
-
-\[
-\partial_{x}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
-\frac{u_{i+1,j}^{n}-u_{i,j}^{n}}{\delta x} & i<I\\
-\frac{u_{i,j}^{n}-u_{i-1,j}^{n}}{\delta x} & i=I
-\end{cases}
-\]
-\[
-\partial_{y}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
-\frac{u_{i,j+1}^{n}-u_{i,j}^{n}}{\delta y} & j<J\\
-\frac{u_{i,j}^{n}-u_{i,j-1}^{n}}{\delta y} & j=J
-\end{cases}
-\]
-
-
-\[
-\partial_{xx}u\left(t^{n},x_{i},y_{j}\right)=\begin{cases}
-\frac{u_{i+1,j}^{n}-u_{i,j}^{n}}{\delta x} & i=0\\
-\frac{u_{i+1,j}^{n}-2u_{i,j}^{n}+u_{i,j}^{n}}{\delta x^{2}} & 0<i<I\\
-\frac{u_{i,j}^{n}-u_{i-1,j}^{n}}{\delta x} & i=I
-\end{cases}
-\]
-
+The time and the space derivatives are approximated with finite difference
+schemes.
 
 
 \paragraph{Explicit Scheme}
@@ -248,7 +526,7 @@ u\left(t^{n},x_{i},y_{j}\right)=u_{i,j}^{n}
 Solve backward from $N$ to $0$, for each $\left(i,j\right)$
 
 \begin{eqnarray*}
-u_{i,j}^{n} & = & u_{i,j}^{n+1}-\alpha^{0}u_{i,j}^{n+1}-\alpha^{x}u_{i,j}^{n+1}-\alpha^{y}u_{i,j}^{n+1}-\beta u_{i+1.j}^{n+1}-\gamma u_{i-1,j}^{n+1}-\zeta u_{i,j+1}^{n+1}-\eta u_{i,j-1}^{n+1}
+u_{i,j}^{n} & = & \left(1+\alpha_{0}^{n+1}+\alpha_{x}^{n+1}+\alpha_{y}^{n+1}\right)u_{i,j}^{n+1}+\beta^{n+1}u_{i+1.j}^{n+1}+\gamma^{n+1}u_{i-1,j}^{n+1}+\zeta^{n+1}u_{i,j+1}^{n+1}+\eta^{n+1}u_{i,j-1}^{n+1}
 \end{eqnarray*}
 
 
@@ -262,7 +540,7 @@ each ``column'' $j$, we have an equation of the form $Ax=b$ where
 $A$ is a tridiagonal matrix. We solve it to find the intermediate
 $u^{n+\frac{1}{2}}$ price.
 \[
-\left(1-\frac{1}{2}\alpha^{0}-\frac{1}{2}\alpha^{y}\right)u_{i,j}^{n+1}-\frac{1}{2}\zeta u_{i,j+1}^{n+1}-\frac{1}{2}\eta u_{i,j-1}^{n+1}=\left(1+\frac{1}{2}\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}+\frac{1}{2}\beta u_{i+1.j}^{n+\frac{1}{2}}+\frac{1}{2}\gamma u_{i-1,j}^{n+\frac{1}{2}}
+\left(1+\frac{1}{2}\alpha_{0}^{n+1}+\frac{1}{2}\alpha_{y}^{n+1}\right)u_{i,j}^{n+1}+\frac{1}{2}\zeta^{n+1}u_{i,j+1}^{n+1}+\frac{1}{2}\eta^{n+1}u_{i,j-1}^{n+1}=\left(1-\frac{1}{2}\alpha_{x}^{n+\frac{1}{2}}\right)u_{i,j}^{n+\frac{1}{2}}-\frac{1}{2}\beta^{n+\frac{1}{2}}u_{i+1.j}^{n+\frac{1}{2}}-\frac{1}{2}\gamma^{n+\frac{1}{2}}u_{i-1,j}^{n+\frac{1}{2}}
 \]
 
 \item The scheme is implicit in the y-axis and explicit in the y-axis. For
@@ -271,16 +549,18 @@ $A$ is a tridiagonal matrix. We solve it to find the intermediate
 $u^{n}$ price.
 \end{enumerate}
 \[
-\left(1-\frac{1}{2}\alpha^{x}\right)u_{i,j}^{n+\frac{1}{2}}-\frac{1}{2}\beta u_{i+1,j}^{n+\frac{1}{2}}-2\gamma u_{i-1,j}^{n+\frac{1}{2}}=\left(1+\frac{1}{2}\alpha^{0}+\frac{1}{2}\alpha^{y}\right)u_{i,j}^{n}+\frac{1}{2}\zeta u_{i.j+1}^{n}+\frac{1}{2}\eta u_{i,j-1}^{n}
+\left(1+\frac{1}{2}\alpha_{x}^{n+\frac{1}{2}}\right)u_{i,j}^{n+\frac{1}{2}}+\frac{1}{2}\beta^{n+\frac{1}{2}}u_{i+1,j}^{n+\frac{1}{2}}+\frac{1}{2}\gamma^{n+\frac{1}{2}}u_{i-1,j}^{n+\frac{1}{2}}=\left(1-\frac{1}{2}\alpha_{0}^{n}-\frac{1}{2}\alpha_{y}^{n}\right)u_{i,j}^{n}-\frac{1}{2}\zeta^{n}u_{i.j+1}^{n}-\frac{1}{2}\eta^{n}u_{i,j-1}^{n}
 \]
 
 
-where:
+where the dcoefficients are obtained by applying discretization schemes
+on the PDEs $\left(\ref{eq:infPDE}\right)$ and $\left(\ref{eq:supPDE}\right)$.
+In particular,
 \begin{itemize}
 \item $\alpha_{0}$ is the coefficient in front of $u_{i,j}$ coming from
 the ``$u$'' term 
 \item $\alpha_{x}$ is the coefficient in front of $u_{i,j}$ coming from
-the ``$\partial_{x}u$'' term
+the ``$\partial_{x}u$'' and ``$\partial_{xx}u$'' terms
 \item $\alpha_{y}$ is the coefficient in front of $u_{i,j}$ coming from
 the ``$\partial_{y}u$'' term
 \item $\beta$ is the coefficient in front of $u_{i+1,j}$ coming from the
@@ -292,24 +572,19 @@ the ``$\partial_{x}u$'' and ``$\partial_{xx}u$'' terms
 \item $\eta$ is the coefficient in front of $u_{i,j-1}$ coming from the
 ``$\partial_{y}u$''
 \end{itemize}
-For the explicit scheme, at step $n$, the coefficients $\alpha_{0}$,$\alpha_{x}$,
-$\alpha_{y}$, $\beta$, $\gamma$, $\zeta$, $\eta$ are computed
-using information from step $n+1$ and are dependent from the spatial
-position $\left(i,j\right)$.
-
-For the ADI scheme, In the first step, the coefficients $\alpha_{y}$
-is computed from $u^{n+1}$ terms while $\beta$ and $\gamma$ are
-computed using $u^{n+\frac{1}{2}}$ terms that are unknown.
-
-The vectorized problem writes, for each column $j$
+Note that for the ADI scheme, the coefficients of the tridiagonal
+matrices depends on the unknows. The vectorized problem actually writes,
+for each column $j$
 \[
 A\left(u_{\cdot,j}^{n+\frac{1}{2}}\right)u_{\cdot,j}^{n+\frac{1}{2}}=b\left(u_{\cdot,j}^{n+1}\right)
 \]
 
 
-where $A$ is the tridiagonal matrix. The solution $u_{\cdot,j}^{n+\frac{1}{2}}$
+where $A$ is a tridiagonal matrix. The solution $u_{\cdot,j}^{n+\frac{1}{2}}$
 is found by iterating the following scheme until the matrix $A^{k}$
-converges:
+converges%
+\footnote{The proof of the convergence is not covered here.%
+}:
 \[
 \begin{cases}
 A\left(u_{\cdot,j}^{n+\frac{1}{2},k-1}\right)u_{\cdot,j}^{n+\frac{1}{2},k} & =b\left(u_{\cdot,j}^{n+1}\right)\\
@@ -320,4 +595,345 @@ u_{\cdot,j}^{n+\frac{1}{2},0} & =u_{\cdot,j}^{n+1}
 
 The same problem occurs in the second step and a similar algorithm
 is used.
+
+
+\section{Results}
+
+
+\subsection*{NOTES}
+\begin{itemize}
+\item The presentation of the results must be more structured with the conclusion
+at the end
+\item The figures must be referenced
+\item Notice that in the results presented below, I have plotted the price
+in function of all the pairs $\left(\Gamma,\Phi\right)$ in the space
+grid at time $0$. The graph is projected in a 2D space by mapping
+the $\left(\Gamma,\Phi\right)$ to the LIBOR. In practice, at time
+$0$, only one pair should be looked at: $\left(0,0\right)$. Looking
+at the price in other coordinates is equivalent to look at the price
+generated from the following zero curves
+\[
+f_{0}^{\left(\Gamma,\Phi\right)}\left(T\right)=f_{0}\left(T\right)+k\left(0,T\right)\Phi\gamma\left(0,T\right)+k\left(0,T\right)\Gamma
+\]
+These curves are NOT flat unless $\left(\Gamma,\Phi\right)=\left(0,0\right)$.
+Hence, it does not make a lot of sense to compare the price obtained
+from the different zero curve generated for the different pairs $\left(\Gamma,\Phi\right)$.
+Instead, we should either bump the initial flat curve and reprice
+the derivative or change the strike and only look at the point $\left(0,0\right)$
+at time 0.
+\end{itemize}
+
+\subsection{Caplet}
+
+In this section, we compared the upper bound price of a caplet with
+maturity 1 year and strike 0 on the LIBOR with tenor $\delta$, obtained
+from the PDE solver and the theoretical price. \\
+
+
+Given the monotonicity of the caplet with the volatility parameter
+$\sigma$ in the Hull-White model, the upper bound price corresponds
+to the Hull-White price with the highest volatility. \\
+
+
+As it can be seen in the figure below, the price obtained using the
+PDE matches the close-form price. However, when comparing the corresponding
+normal implied volatility, it can be seen that price obtained is not
+accurate enough to reach the correct implied volatility, especially
+far in-the-money. This will be investigated further. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=0.75\textwidth]{UVHJM/Caplet}
+\par\end{centering}
+
+\caption{Caplet maturity $T=1$ on the $\delta-$LIBOR rate. Model parameters:
+$\sigma_{inf}=1\%$, $\sigma_{sup}=5\%$. Solver parameters: Number
+of time points = 11, $x_{min}=x_{0}-\sigma_{max}\sqrt{T}$, $x_{max}=x_{0}+\sigma_{max}\sqrt{T}$,
+$y_{min}=0$, $y_{max}=\sigma_{max}^{2}T$}
+
+
+\end{figure}
+
+
+
+
+
+\subsection{Binary Caplet}
+
+In order to choose the number of discretization points in the ``space''
+grid, we will compare the HW Binary caplet price with the one obtained
+from the uncertain volatility non-linear PDE with $\sigma_{inf}=\sigma_{sup}$. 
+
+In that degenerate case, the non-linear PDE is reduced to the linear
+HW PDE. As it can be seen in the figures below, there is still room
+for improvement to increase the accuracy of the PDE solver. 
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=0.75\textwidth]{UVHJM/BinaryCaplet}
+\par\end{centering}
+
+\caption{Price Binary Caplet with strike $K=0$ and maturity $T=1$ on the
+LIBOR with tenor $\delta$ using the PDE or the close-form formula.
+Solver parameters: Number of time points = 11, Number of space points
+=41, $x_{min}=x_{0}-\sigma_{max}\sqrt{T}$, $x_{max}=x_{0}+\sigma_{max}\sqrt{T}$,
+$y_{min}=0$, $y_{max}=\sigma_{max}^{2}T$}
+
+
+\end{figure}
+
+
+
+
+We now used the Uncertain Volatility non-linear PDE with $\sigma_{inf}=1\%$
+and $\sigma_{sup}=5\%$ to retrieve the upper and the lower bound
+of a binary caplet with maturity 1 year and strike 0 on the LIBOR
+with tenor $\delta$.
+
+Given the non-monotonicity of the Hull-white price of a binary option
+with the volatility parameter, we expect the upper bound price to
+be non-attainable by any prices obtained from a constant volatility
+model with volatility between 1\% and 5\%. 
+
+The same result is expected for the lower bound price. Moreover, the
+prices of a binary option computed from a Hull-White model with constant
+volatility between 1\% and 5\% should be between the upper and the
+lower bound price obtained from the UV non-linear PDE.
+
+\begin{figure}[H]
+\begin{centering}
+\includegraphics[width=0.75\textwidth]{UVHJM/BinaryCapletwithBounds}
+\par\end{centering}
+
+\caption{Price Binary Caplet with strike $K=0$ and maturity $T=1$ on the
+LIBOR with tenor $\delta$. Solver parameters: Number of time points
+= 11, Number of space points =41, $x_{min}=x_{0}-\sigma_{max}\sqrt{T}$,
+$x_{max}=x_{0}+\sigma_{max}\sqrt{T}$, $y_{min}=0$, $y_{max}=\sigma_{max}^{2}T$}
+\end{figure}
+
+
+\newpage{}
+
+
+\section{Appendix }
+
+
+\subsection{Derivation of the HJM Framework\label{sub:DerivationHJM}}
+
+
+\subsubsection{Instantaneous Forward Rate}
+
+The instantaneous forward rate $f\left(t,T\right)$ with $t\leq T$
+is the continuously compounded rate seen at time $t$ over the infinitesimal
+period $\left[T,T+\delta T\right]$. It is defined with $B\left(t,T\right)$
+the price of the zero-coupon bond at time $t$ and maturing at time
+$T$.
+
+\[
+f\left(t,T\right)=\lim_{\delta T\rightarrow0}\frac{1}{\delta T}\ln\left[\frac{B\left(t,T+\delta T\right)}{B\left(t,T\right)}\right]
+\]
+
+
+or equivalently,
+\begin{equation}
+B\left(t,T\right)=e^{-\int_{t}^{T}f\left(t,u\right)\mathrm{d}u}\label{eq:forwardDef}
+\end{equation}
+
+
+
+\subsubsection{No-arbitrage assumption and implication}
+
+In the HJM framework, the dynamics of the instantaneous forward rate
+is governed by the no-arbitrage argument. Under the risk-neutral measure
+$\mathbb{Q}$ (that exists given the no-arbitrage argument), the instantaneous
+forward process can be expresed as follow:
+\begin{equation}
+\mathrm{d}f\left(t,T\right)=\mu_{f}\left(t,T\right)\mathrm{d}t+\sigma_{f}\left(t,T\right)\mathrm{d}W_{t}\label{eq:HJM}
+\end{equation}
+
+
+The drift $\mu_{f}$ in the equation $\left(\ref{eq:HJM}\right)$
+must satisfies some condition for the no-arbitrage assumption to hold. 
+
+In fact, under the risk-neutral measure, the instantaneous drift of
+every tradable asset $A_{t}$ is given by $r_{t}A_{t}$. In particular,
+this must be true for zero-coupon bonds. 
+
+From the equation $\left(\ref{eq:forwardDef}\right)$, 
+\begin{eqnarray}
+\mathrm{d}\ln B\left(t,T\right) & = & -\mathrm{d}\int_{t}^{T}f\left(t,u\right)\mathrm{d}u\nonumber \\
+ & = & r\left(t\right)\mathrm{d}t-\left[\int_{t}^{T}\mu_{f}\left(t,u\right)\mathrm{d}t+\int_{t}^{T}\sigma_{f}\left(t,u\right)\mathrm{d}W_{t}\right]\mathrm{d}u\label{eq:LogBondDiff}\\
+ & = & \left[r\left(t\right)-\int_{t}^{T}\mu_{f}\left(t,u\right)\mathrm{d}u\right]\mathrm{d}t+\left[\int_{t}^{T}\sigma_{f}\left(t,u\right)\mathrm{d}u\right]\mathrm{d}W_{t}\nonumber 
+\end{eqnarray}
+
+
+In the equation $\left(\ref{eq:LogBondDiff}\right)$, the second line
+is obtained by applying the Leibniz's rule for differenciation%
+\footnote{See \url{https://en.wikipedia.org/wiki/Leibniz_integral_rule}%
+}. Hence, applying the Ito lemma, we find:
+\[
+\frac{\mathrm{d}B\left(t,T\right)}{B\left(t,T\right)}=\left[r\left(t\right)-\int_{t}^{T}\mu_{f}\left(t,u\right)\mathrm{d}u+\frac{1}{2}\left(\int_{t}^{T}\sigma_{f}\left(t,u\right)\mathrm{d}u\right)^{2}\right]\mathrm{d}t+\left[\dots\right]\mathrm{d}W_{t}
+\]
+
+
+Under the risk-neutral measure, we must have:
+\[
+r\left(t\right)=r\left(t\right)-\int_{t}^{T}\mu_{f}\left(t,u\right)\mathrm{d}u+\frac{1}{2}\left(\int_{t}^{T}\sigma_{f}\left(t,u\right)\mathrm{d}u\right)^{2}
+\]
+
+
+This implies, when differenciating with respect to $T$:
+\begin{equation}
+\mu_{f}\left(t,T\right)=\sigma_{f}\left(t,T\right)\int_{t}^{T}\sigma_{f}\left(t,u\right)\mathrm{d}u\label{eq:noArbitrage}
+\end{equation}
+
+
+Hence, in the HJM framework, the dynamics of the instantaneous forward
+rate is entirely defined by the term structure of the volatility $\sigma_{f}\left(t,T\right)$.
+
+
+\subsubsection{Low-dimensional Markovian Representation of the Forward Curve}
+
+In general, each point of the forward curve will be driven by its
+own diffusion. It is possible to represent the forward curve with
+a low-dimensional Markovian system when the volatility as the following
+structure: 
+\begin{equation}
+\sigma_{f}\left(t,T\right)=\sigma_{f}\left(t,s\right)\exp\left(-\int_{s}^{T}\beta\left(u\right)\mathrm{d}u\right)\label{eq:separableCond}
+\end{equation}
+
+
+In \cite{RS}, the authors proven that this structure if a suffcient
+condition for the forward curve to be represented with a low-dimensional
+Markovian system. Another approach is presented to have an intuition
+on the origin of the result.
+
+The short-rate $r_{t}=f\left(t,t\right)$ can be expressed as follow
+by integrating $\left(\ref{eq:HJM}\right)$ 
+\[
+r_{t}=f\left(0,t\right)+\int_{0}^{t}\sigma_{f}\left(x,t\right)\left(\int_{x}^{t}\sigma_{f}\left(x,u\right)\mathrm{d}u\right)\mathrm{d}x+\int_{0}^{t}\sigma_{f}\left(x,t\right)\mathrm{d}W_{x}
+\]
+
+
+The differential form is computed using the Leibnitz's rule:
+\begin{equation}
+\mathrm{d}r_{t}=\frac{\mathrm{d}f\left(0,t\right)}{\mathrm{d}t}\mathrm{d}t+\sigma_{t}\mathrm{d}W_{t}+\left[\int_{0}^{t}\frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)\left(\int_{x}^{t}\sigma_{f}\left(x,u\right)\right)\mathrm{d}x+\int_{0}^{t}\sigma_{f}^{2}\left(x,t\right)\mathrm{d}x+\int_{0}^{t}\frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)\mathrm{d}W_{x}\right]\mathrm{d}t\label{eq:shortRateDyn}
+\end{equation}
+
+
+Given that the drift of the short-rate has a path-dependent component,
+it is not Markovian in general. However, if that path-dependent term
+can be written as a linear combination of the short-term rate $r_{t}$
+and another Markovian variable, then we would obtain a Markovian system.
+
+Let us define 
+\[
+\Phi_{t}=\int_{0}^{t}\sigma_{f}^{2}\left(x,t\right)\mathrm{d}x
+\]
+
+
+Let us assume that there exists a deterministic function $\alpha$
+such that 
+\[
+\int_{0}^{t}\frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)\mathrm{d}W_{x}=\alpha\left(t\right)\int_{0}^{t}\sigma_{f}\left(x,t\right)\mathrm{d}W_{x}
+\]
+
+
+This yields 
+\begin{eqnarray}
+ &  & \frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)=\alpha\left(t\right)\sigma_{f}\left(x,t\right)\nonumber \\
+ & \Leftrightarrow & \sigma_{f}\left(x,T\right)=\sigma_{f}\left(x,t\right)\exp\left(\int_{t}^{T}\alpha\left(u\right)\mathrm{d}u\right)\label{eq:separabCond2}
+\end{eqnarray}
+
+
+Now, let us assume that the volatility is defined as in $\left(\ref{eq:separabCond2}\right)$.
+Then the path-dependent drift become:
+\begin{eqnarray*}
+ &  & \int_{0}^{t}\frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)\left(\int_{x}^{t}\sigma_{f}\left(x,u\right)\right)\mathrm{d}x+\int_{0}^{t}\sigma_{f}^{2}\left(x,t\right)\mathrm{d}x+\int_{0}^{t}\frac{\partial\sigma_{f}}{\partial t}\left(x,t\right)\mathrm{d}W_{x}\\
+ & = & \int_{0}^{t}\alpha\left(t\right)\sigma_{f}\left(x,t\right)\left(\int_{x}^{t}\sigma_{f}\left(x,u\right)\right)\mathrm{d}x+\Phi_{t}+\int_{0}^{t}\alpha\left(t\right)\sigma_{f}\left(x,t\right)\mathrm{d}W_{x}\\
+ & = & \alpha\left(t\right)r_{t}+\Phi_{t}
+\end{eqnarray*}
+
+
+The process of $r_{t}$ and $\Phi_{t}$ are then, respectively:
+\[
+\begin{cases}
+\mathrm{d}r_{t} & =\left[\frac{\mathrm{d}f\left(0,t\right)}{\mathrm{d}t}+\alpha\left(t\right)r_{t}+\Phi_{t}\right]\mathrm{d}t+\sigma_{t}\mathrm{d}W_{t}\\
+\mathrm{d}\Phi_{t} & =\left[\sigma_{t}^{2}+2\alpha\left(t\right)\Phi_{t}\right]\mathrm{d}t
+\end{cases}
+\]
+
+
+Assuming the volatility $\sigma_{t}$ is at most a function of $r_{t}$
+and $\Phi_{t}$, $\left(r_{t},\Phi_{t}\right)$ is indeed a Markovian
+system. The sufficient condition $\left(\ref{eq:separabCond2}\right)$
+is referred as the separability condition.
+
+In the litterature, $r_{t}$ is replaced by $\Gamma_{t}$ and $\alpha\left(t\right)=-\beta\left(t\right)$
+\[
+\Gamma_{t}=\int_{0}^{t}\sigma_{f}\left(x,t\right)\left(\int_{x}^{t}\sigma_{f}\left(x,u\right)\mathrm{d}u\right)\mathrm{d}x+\int_{0}^{t}\sigma_{f}\left(x,t\right)\mathrm{d}W_{x}
+\]
+
+
+whose SDE is
+\[
+\mathrm{d}\Gamma_{t}=\left(\Phi_{t}-\beta\left(t\right)\Gamma_{t}\right)\mathrm{d}t+\sigma_{t}\mathrm{d}W_{t}
+\]
+
+
+It can then be noticed that this condition is also sufficient for
+the forward curve to be represented by a two-dimensional Markovian
+system:
+\begin{eqnarray*}
+f\left(t,T\right) & = & f\left(0,T\right)+\int_{0}^{t}\sigma_{f}\left(s,T\right)\left(\int_{s}^{T}\sigma_{f}\left(s,u\right)\mathrm{d}u\right)\mathrm{d}s+\int_{0}^{t}\sigma_{f}\left(s,T\right)\mathrm{d}W_{s}\\
+ & = & f\left(0,T\right)+\int_{0}^{t}k\left(t,T\right)\sigma_{f}\left(s,t\right)\left(\int_{s}^{t}\sigma_{f}\left(s,u\right)\mathrm{d}u+\sigma_{f}\left(s,u\right)\int_{t}^{T}k\left(t,u\right)\mathrm{d}u\right)\mathrm{d}s+k\left(t,T\right)\int_{0}^{t}\sigma_{f}\left(s,t\right)\mathrm{d}W_{s}\\
+ & = & f\left(0,T\right)+k\left(t,T\right)\Gamma_{t}+k\left(t,T\right)\Phi_{t}\gamma\left(t,T\right)
+\end{eqnarray*}
+
+
+with $k\left(t,T\right)=\exp\left(-\int_{t}^{T}\beta\left(s\right)\mathrm{d}s\right)$
+and $\gamma\left(t,T\right)=\int_{t}^{T}k\left(t,s\right)\mathrm{d}s$.
+
+
+\subsection{Derivation of the HJB Partial Differential Equation in the HJM Framework\label{sub:DerivationHJB}}
+
+
+\subsection{Derivation of the Numerical Schemes\label{sub:DerivationScheme}}
+
+The discretization schemes used to numerically solve the PDE are the
+following:
+\[
+\partial_{t}u\left(t,x_{i},y_{j}\right)=\frac{u_{i,j}^{n+1}-u_{i,j}^{n}}{\delta t}
+\]
+
+
+\[
+\partial_{x}u\left(t,x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i+1,j}-u_{i,j}}{\delta x} & i<I\\
+\frac{u_{i,j}-u_{i-1,j}}{\delta x} & i=I
+\end{cases}
+\]
+\[
+\partial_{y}u\left(t,x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i,j+1}-u_{i,j}}{\delta y} & j<J\\
+\frac{u_{i,j}-u_{i,j-1}}{\delta y} & j=J
+\end{cases}
+\]
+
+
+\[
+\partial_{xx}u\left(t,x_{i},y_{j}\right)=\begin{cases}
+\frac{u_{i+1,j}-u_{i,j}}{\delta x} & i=0\\
+\frac{u_{i+1,j}-2u_{i,j}+u_{i,j}}{\delta x^{2}} & 0<i<I\\
+\frac{u_{i,j}-u_{i-1,j}}{\delta x} & i=I
+\end{cases}
+\]
+
+
+\newpage{}
+\begin{thebibliography}{1}
+\bibitem{RS} P. Ritchken, L. Sankarasubramanian (1992) On Markovian
+Representation of the Term Structure, Working papers of the Federal
+Reserve Bank of Cleveland.\end{thebibliography}
+
 \end{document}
