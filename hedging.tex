@@ -1,0 +1,435 @@
+% Preview source code
+
+%% LyX 2.0.6 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm,headheight=31.941cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{
+ pdfauthor={Vathana.S.Leang}}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[T1]{fontenc} % MiKTeX as ltxbase
+\usepackage[latin9]{inputenc} % MiKTeX as ltxbase
+\usepackage{lmodern} % for modern T1 fonts
+
+% hyphenation patterns for English
+
+
+% euro symbol
+\usepackage{eurosym} % MiKTeX as eurosym
+
+% used to prevent footnotes from disapearing when placed inside tables/other
+\usepackage{footnote} % MiKTeX as mdwtools
+
+% remove the default identation of new paragraphs
+\usepackage{parskip} % MiKTeX as parskip
+
+
+% for cross references
+%\usepackage{hyperref} % MiKTeX as hyperref
+\usepackage{bookmark} % MiKTeX as oberdiek
+
+% for math
+\usepackage{amsmath,amssymb,amsthm} % MiKTeX as amsmath, amscls
+\usepackage{thmtools,thm-restate} % MiKTeX as thmtools
+
+% for functions defined by branches
+\usepackage{cases} % MiKTeX as cases
+
+% for double stroke mathematical symbols
+\usepackage{dsfont} % MiKTeX as dstroke
+
+% to allow the use of appendices
+\usepackage[titletoc,toc,title]{appendix} % MiKTeX as appendix
+
+% to allow fixing a float in the place where it is declared
+\usepackage{float} % MiKTeX as float
+
+% used to color and highlight text. Used in the definition of \ins, \del, \hlt.
+\usepackage[usenames,dvipsnames]{xcolor} % MiKTeX as xcolor
+
+% insert comments in the PDF. Used in the definition of \cmt.
+\usepackage{pdfcomment} % MiKTeX as pdfcomment, bezos
+
+% decorate text. Used in the definition of \ins and \del.
+\usepackage[normalem]{ulem} % MiKTeX as ulem
+
+% makes figure and table captions prettier
+\usepackage[font=small,labelfont=bf,margin=0.4cm]{caption} % MiKTeX as caption
+
+% to include figures in the text
+\usepackage{graphicx} % MiKTeX as graphics
+
+% "Tikz is probably the most complex and powerful tool to create graphic elements."
+% https://www.sharelatex.com/learn/TikZ_package
+\usepackage{tikz} % MiKTeX as pgf
+
+% packages used in the composition of the Scope of Approval part of the Valuation Model template
+% multi-column typesetting mechanism
+\usepackage{framed} % MiKTeX as framed
+%\usepackage{mdframed} % MiKTeX as mdframed and l3kernel - the two are needed
+%\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+%\let\endchangemargin=\endlist
+%\newmdenv[
+  %skipabove=\parskip,
+  %linewidth=0.8pt,
+  %%innertopmargin = 0pt,
+  %%leftmargin = 0pt,
+  %%innerleftmargin = 1em,
+  %%innerbottommargin = 0pt,
+  %%innerrightmargin = 0pt,
+  %%rightmargin = 0pt,
+  %%topline = true,
+  %%rightline = true,
+  %%bottomline = true,
+%]{simpleFrame}
+
+% used in template development to fill in sections with random text
+%\usepackage{lipsum} % MiKTeX as lipsum
+
+% packages used to compose the header and footer of the MRG template
+\usepackage{fancyhdr} % MiKTeX as fancyhdr
+
+% to control itemized lists and enumerations
+\usepackage{enumitem} %MiKTeX as enumitem
+
+% standard array and tabular environments
+\usepackage{array} % MiKTeX as tools
+
+% packages to customize the tables of the MRG template
+% colored table cells and headings
+\usepackage{colortbl} % MiKTeX as colortbl
+% tables that span over multiple pages
+\usepackage{longtable} % MiKTeX as tools
+% easier interface than tabular to control table size
+\usepackage{tabularx} % MiKTeX as tools
+% new column  definition to lighten the usage of tabularx
+\newcolumntype{L}[1]{>{\hsize=#1\hsize\raggedright\arraybackslash}X}
+\newcolumntype{R}[1]{>{\hsize=#1\hsize\raggedleft\arraybackslash}X}
+\newcolumntype{C}[1]{>{\hsize=#1\hsize\centering\arraybackslash}X}
+%\newcolumntype{C}{>{\centering\arraybackslash}X}
+% writing professional tables
+\usepackage{booktabs}
+
+% The forloop package provides the command \forloop for the user.
+\usepackage{forloop} % MiKTeX as forloop
+
+\usepackage{xstring} % MiKTeX as xstring
+
+\usepackage{etoolbox} % MiKTeX as etoolbox
+
+\usepackage[ruled,vlined]{algorithm2e} % MiKTeX as algorithm2e
+
+\usepackage{multirow} % MiKTeX as multirow
+
+\makeatother
+
+\begin{document}
+
+\title{Notes on Risk Hedging}
+
+\maketitle
+
+\section{Dynamics Assumption}
+
+Under the risk-neutral measure (Which one?), there exist two processes
+modeling the underlying that are in practice both \textbf{\textcolor{red}{unknown}}
+and \textbf{\textcolor{red}{different}}:
+\begin{itemize}
+\item True process: $S_{t}$ with the instantaneous volatility $\sigma_{t}$
+that may be itself stochastic. This is the true process driving the
+underlying
+\item Market process: $S_{t}^{mkt}$. This is the hidden dynamics used by
+the market to model the underlying.
+\end{itemize}
+
+\paragraph{\textcolor{red}{Important Note:}}
+
+Here, the true dynamics does not refer to the dynamics of the underlying
+under the real-world measure! It rather refers to the true behavior
+of the instantaneous volatility of the underlying. 
+
+
+\section{Delta-Hedging}
+
+Considering a European option $V^{mkt}$ contingent on a stock $S$
+with a payoff $f\left(S_{T}\right)$ at maturity $T$%
+\footnote{The option price is labeled $V^{mkt}$ is labeled $mkt$ as it is
+obtained using the market process while the underlying $S$ is driven
+by the true process.%
+}.
+
+Considering a self-financing hedging portfolio comprised of the option,
+the stock and cash. Its value at inception in given in the table $\ref{tab:deltaNeutralPort0}$.
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|}
+\hline 
+Components & Value\tabularnewline
+\hline 
+\hline 
+Option & $V^{mkt}$\tabularnewline
+\hline 
+Stock & $-\Delta S$\tabularnewline
+\hline 
+Cash & -$V^{mkt}+\Delta S$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+
+\caption{Self-financing delta hedging portfolio at time $t=0$\label{tab:deltaNeutralPort0}}
+\end{table}
+
+
+Assuming excess cash is reinvested at the risk-free rate $r$ and
+the stock $S$ is a giving a continuous dividend yield $q$, the value
+of the portfolio at time $t=\delta t$ is given in the table $\ref{tab:deltaNeutralPort1}$.
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|}
+\hline 
+Components & Value\tabularnewline
+\hline 
+\hline 
+Option & $V^{mkt}+\mathrm{d}V^{mkt}$\tabularnewline
+\hline 
+Stock & $-\Delta S-\Delta\delta S$\tabularnewline
+\hline 
+Cash & $\left(-V^{mkt}+\Delta S\right)\left(1+r\delta t\right)-q\delta t\Delta S$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+
+\caption{Self-financing delta hedging portfolio at time $t=\delta t$\label{tab:deltaNeutralPort1}}
+\end{table}
+
+
+Hence, the incremental delta-hedging P\&L is given by
+\begin{eqnarray*}
+\delta PNL & = & \mathrm{d}V^{mkt}-\Delta\delta S+\left(-V^{mkt}+\Delta S\right)r\delta t-q\delta t\Delta S
+\end{eqnarray*}
+
+
+Let us make some assumptions to further analyse the difference sources
+of P\&L:
+\begin{enumerate}
+\item The Market Model is known.
+\item The Market Model is a local volatility model.
+\end{enumerate}
+This first assumption implies that the perfect hedge ratio to cancel
+first-order terms of $\delta S$ is known $\left(\frac{\partial V^{mkt}}{\partial S}\right)$.
+The second assumption implies that the option price is simply a function
+of the time and the underlying value $\left(V\left(t,S\right)\right)$.
+
+Hence,
+\[
+\delta PNL=V^{mkt}\left(t+\delta t,S+\delta S\right)-V^{mkt}\left(t,S\right)-rV^{mkt}\delta t+\frac{\partial V^{mkt}}{\partial S}\left(-\delta S+rS\delta t-qS\delta t\right)
+\]
+
+
+The incremental $PNL$ is expanded to the lowest orders for $\delta t$
+and $\delta S$ (this is equivalent to applying the Ito's lemma that
+stops at second-order $\delta S^{2}$ terms)
+\begin{eqnarray*}
+\delta PNL & = & \frac{\partial V^{mkt}}{\partial t}\delta t+\frac{\partial V^{mkt}}{\partial S}\delta S+\frac{1}{2}\delta S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}-rV^{mkt}\delta t+\frac{\partial V^{mkt}}{\partial S}\left(-\delta S+rS\delta t-qS\delta t\right)\\
+ & = & \left(\frac{\partial V^{mkt}}{\partial t}-rV^{mkt}+\left(r-q\right)S\frac{\partial V^{mkt}}{\partial S}\right)\delta t+\frac{1}{2}\delta S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}
+\end{eqnarray*}
+
+
+The second assumption also implies the existence of a volatility function
+$\left(t,S\right)\rightarrow\hat{\sigma}\left(t,S\right)$ such that:
+
+\begin{equation}
+\frac{\partial V^{mkt}}{\partial t}\left(t,S\right)-rV^{mkt}\left(t,S\right)+\left(r-q\right)S\frac{\partial V^{mkt}}{\partial S}=-\frac{1}{2}\hat{\sigma}\left(t,S\right)^{2}S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}\left(t,S\right)\label{eq:thetagamma}
+\end{equation}
+
+
+Hence, 
+
+\begin{eqnarray*}
+\delta PNL & = & \frac{1}{2}S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}\left(t,S\right)\left(\frac{1}{S^{2}}\cdot\frac{\delta S^{2}}{\delta t}-\hat{\sigma}\left(t,S\right)^{2}\right)\delta t\\
+ & = & \frac{1}{2}S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}\left(t,S\right)\left(\sigma_{t}^{2}-\hat{\sigma}\left(t,S\right)^{2}\right)\delta t
+\end{eqnarray*}
+
+
+Even with the assumption of perfect knowledge of the market process,
+the incremental delta-hedged P\&L is non null. In fact, we will still
+be exposed to the discrepancy between the market belief of the true
+volatility and the true volatility. 
+
+
+\paragraph{Digression on the Calibration Problem}
+
+Under the belief that the market is represented by an unique local
+volatility function and that model is then used to price ALL securities
+on the market%
+\footnote{Here we reduce the market to a single underlying and we mean ALL securities
+contingent to that underlying.%
+}, that function can be extracted from the prices of vanilla option.
+This is the so-called ``Dupire local volatility'' function.\\
+
+
+This local volatility function that is obtained using the static picture
+of a portion of the market should then always prevails. This implies
+that applying the same calibration method at different times should
+yield the same result. This is unfortunately not the case and the
+assumption of a local volatility model collapses.\\
+
+
+Hence, in a discrete delta-hedging setting, not only will we be exposed
+to the error from assuming the delta to be piecewise constant, but
+we will also be exposed to the calibration error that is making the
+relation $\left(\ref{eq:thetagamma}\right)$ obsolete.
+
+
+\paragraph{Digression on Model risk}
+
+The P\&L approach is yet another angle from which one can observe
+model risk, that is choosing a model is not able to capture risk factor
+inherent to a derivative product.\\
+
+
+In fact, assuming the market model indeed behaves as a Black-Scholes
+model with a volatility parameter $\hat{\sigma}$, the hedging PNL
+corresponding to a given option $V$ is:
+\[
+\delta PNL=\frac{1}{2}S^{2}\frac{\partial^{2}V^{mkt}}{\partial S^{2}}\left(t,S\right)\left(\frac{1}{S^{2}}\cdot\frac{\delta S^{2}}{\delta t}-\hat{\sigma}^{2}\right)\delta t
+\]
+
+
+It is not clear how that parameter can be estimated. In fact, for
+a binary option, two constant volatility parameters may yield the
+same market price but different incremental hedging PNL. It is clear
+from the start that such assumption concerning the market dynamics
+is wrong. 
+
+
+\section{Gamma and Vega Hedging }
+
+Now considering two exotic options $V^{mkt,1}$ and $V^{mkt,2}$ contingent
+on the same underlying $S$ but with different payoff functions. The
+objective is to build a portfolio comprised of the two options, the
+underlying and cash that is delta and gamma-neutral. 
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|}
+\hline 
+Components & Value\tabularnewline
+\hline 
+\hline 
+Option 1 & $V^{mkt,1}$\tabularnewline
+\hline 
+Option 2 & $-\lambda V^{mkt,2}$\tabularnewline
+\hline 
+Stock & $-\Delta S$\tabularnewline
+\hline 
+Cash & $-V^{mkt,1}+\lambda V^{mkt,2}+\Delta S$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+
+\caption{Self-financing delta and gamma hedging portfolio at time $t=0$}
+\end{table}
+
+
+\begin{table}[H]
+\begin{centering}
+\begin{tabular}{|c|c|}
+\hline 
+Components & Value\tabularnewline
+\hline 
+\hline 
+Option 1 & $V^{mkt,1}+\mathrm{d}V^{mkt,1}$\tabularnewline
+\hline 
+Option 2 & $-\lambda V^{mkt,2}-\lambda\mathrm{d}V^{mkt,2}$\tabularnewline
+\hline 
+Stock & $-\Delta S-\Delta\delta S$\tabularnewline
+\hline 
+Cash & $\left(-V^{mkt,1}+\lambda V^{mkt,2}+\Delta S\right)\left(1+r\delta t\right)-q\delta t\Delta S$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+
+\caption{Self-financing delta and gamma hedging portfolio at time $t=\delta t$}
+\end{table}
+
+
+Hence, the incremental P\&L is given by:
+\begin{eqnarray*}
+\delta PNL & = & \mathrm{d}V^{mkt,1}-\lambda\mathrm{d}V^{mkt,2}-\Delta\delta S+\left(-V^{mkt,1}+\lambda V^{mkt,2}+\Delta S\right)r\delta t-q\delta t\Delta S\\
+ & = & \mathrm{d}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]-\left[V^{mkt,1}-\lambda V^{mkt,2}\right]r\delta t-\Delta\delta S+\left(r-q\right)\Delta S\delta t
+\end{eqnarray*}
+
+
+Given the discussion about the constant volatility or the local volatility
+model, let us make new assumptions:
+\begin{enumerate}
+\item The Market Model is known
+\item The Market Model is a two-factor model: one driven the stock while
+the other drives the volatility. 
+\end{enumerate}
+Again the first assumption implies that the optimal hedge ratios are
+known:
+\begin{eqnarray*}
+\Delta & = & \frac{\partial V^{mkt,1}}{\partial S}-\lambda\frac{\partial V^{mkt,2}}{\partial S}\\
+\lambda & = & \frac{\frac{\partial^{2}V^{mkt,1}}{\partial S^{2}}}{\frac{\partial^{2}V^{mkt,2}}{\partial S^{2}}}
+\end{eqnarray*}
+
+
+The second assumption implies that the option values are now function
+of 3 variables $V\left(t,S,\sigma\right)$
+\begin{eqnarray*}
+\delta PNL & = & \frac{\partial}{\partial t}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta t+\frac{\partial}{\partial S}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta S+\frac{1}{2}\delta S^{2}\frac{\partial^{2}}{\partial S^{2}}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\\
+ &  & +\frac{\partial}{\partial\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta\sigma+\frac{1}{2}\delta\sigma^{2}\frac{\partial^{2}}{\partial\sigma^{2}}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]+\frac{1}{2}\delta\sigma\delta S\frac{\partial^{2}}{\partial S\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\\
+ &  & -\left[V^{mkt,1}-\lambda V^{mkt,2}\right]r\delta t-\Delta\delta S+\left(r-q\right)\Delta S\delta t\\
+\delta PNL & = & \frac{\partial}{\partial t}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta t-\left[V^{mkt,1}-\lambda V^{mkt,2}\right]r\delta t+\left(r-q\right)\frac{\partial}{\partial S}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]S\delta t\\
+ &  & +\frac{\partial}{\partial\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta\sigma+\frac{1}{2}\delta\sigma^{2}\frac{\partial^{2}}{\partial\sigma^{2}}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]+\frac{1}{2}\delta\sigma\delta S\frac{\partial^{2}}{\partial S\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]
+\end{eqnarray*}
+
+
+We have (what is the interpretation? It feels like here we are dissociating
+the dynamics of the implied volatility surface and its calibration.
+Are they not linked?):
+\begin{eqnarray*}
+ &  & \frac{\partial}{\partial t}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta t-\left[V^{mkt,1}-\lambda V^{mkt,2}\right]r\delta t+\left(r-q\right)\frac{\partial}{\partial S}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]S\delta t\\
+ & = & -\frac{1}{2}\sigma^{2}S^{2}\frac{\partial^{2}}{\partial S^{2}}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\\
+ & = & 0
+\end{eqnarray*}
+
+
+Hence,
+
+\[
+\delta PNL=\frac{\partial}{\partial\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]\delta\sigma+\frac{1}{2}\delta\sigma^{2}\frac{\partial^{2}}{\partial\sigma^{2}}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]+\frac{1}{2}\delta\sigma\delta S\frac{\partial^{2}}{\partial S\sigma}\left[V^{mkt,1}-\lambda V^{mkt,2}\right]
+\]
+
+
+``This is where stochastic volatility models are called for: their
+aim is not to model the dynamics of realized volatility but to model
+the dynamics of implied volatility.''
+\end{document}
